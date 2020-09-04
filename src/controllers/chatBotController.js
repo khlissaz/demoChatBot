@@ -1,36 +1,41 @@
 require("dotenv").config();
-
+import request from "request";
 const MY_VERIFY_TOKEN=process.env.MY_VERIFY_TOKEN;
-
-
+const PAGE_ACCESS_TOKEN=process.env.PAGE_ACCESS_TOKEN;
 
 let postWebhook=(req,res)=>{
-    let body = req.body;
+   
+ // Parse the request body from the POST
+ let body = req.body;
 
-    // Checks this is an event from a page subscription
-    if (body.object === 'page') {
-  
-      // Iterates over each entry - there may be multiple if batched
-      body.entry.forEach(function(entry) {
-  
-        // Gets the message. entry.messaging is an array, but 
-        // will only ever contain one message, so we get index 0
-        let webhook_event = entry.messaging[0];
-        console.log(webhook_event);
-      });
-  
-      // Returns a '200 OK' response to all requests
-      res.status(200).send('EVENT_RECEIVED');
-    } else {
-      // Returns a '404 Not Found' if event is not from a page subscription
-      res.sendStatus(404);
-    }
+ // Check the webhook event is from a Page subscription
+ if (body.object === 'page') {
+
+   // Iterate over each entry - there may be multiple if batched
+   body.entry.forEach(function(entry) {
+// Gets the body of the webhook event
+let webhook_event = entry.messaging[0];
+console.log(webhook_event);
+
+// Get the sender PSID
+let sender_psid = webhook_event.sender.id;
+console.log('Sender PSID: ' + sender_psid);
+   });
+
+   // Return a '200 OK' response to all events
+   res.status(200).send('EVENT_RECEIVED');
+
+ } else {
+   // Return a '404 Not Found' if event is not from a page subscription
+   res.sendStatus(404);
+ }
+
 
 };
 
 let getWebhook=(req,res)=>{
  // Your verify token. Should be a random string.
- let VERIFY_TOKEN =MY_VERIFY_TOKEN;
+ let VERIFY_TOKEN = MY_VERIFY_TOKEN;
     
  // Parse the query params
  let mode = req.query['hub.mode'];
@@ -54,6 +59,84 @@ let getWebhook=(req,res)=>{
  }
 };
 
+// Handles messages events
+function handleMessage(sender_psid, received_message) {
+  let response;
+
+  // Check if the message contains text
+  if (received_message.text) {    
+
+    // Create the payload for a basic text message
+    response = {
+      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+    }
+    
+
+  }  
+  else if (received_message.attachments) {
+  
+    // Gets the URL of the message attachment
+    let attachment_url = received_message.attachments[0].payload.url;
+    response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Is this the right picture?",
+            "subtitle": "Tap a button to answer.",
+            "image_url": attachment_url,
+            "buttons": [
+              {
+                "type": "postback",
+                "title": "Yes!",
+                "payload": "yes",
+              },
+              {
+                "type": "postback",
+                "title": "No!",
+                "payload": "no",
+              }
+            ],
+          }]
+        }
+      }
+    }
+  } 
+  // Sends the response message
+  callSendAPI(sender_psid, response);
+}
+
+// Handles messaging_postbacks events
+function handlePostback(sender_psid, received_postback) {
+
+}
+
+// Sends response messages via the Send API
+function callSendAPI(sender_psid, response) {
+  // Construct the message body
+  let request_body = {
+    "recipient": {
+      "id": sender_psid
+    },
+    "message": response
+  }
+
+  // Send the HTTP request to the Messenger Platform
+  request({
+    "uri": "https://graph.facebook.com/v6.0/me/messages",
+    "qs": { "access_token": PAGE_ACCESS_TOKEN },
+    "method": "POST",
+    "json": request_body
+  }, (err, res, body) => {
+    if (!err) {
+      console.log('message sent!')
+    } else {
+      console.error("Unable to send message:" + err);
+    }
+  }); 
+  
+}
 module.exports={
     postWebhook: postWebhook,
     getWebhook: getWebhook

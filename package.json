@@ -21,7 +21,8 @@
     "curl": "^0.1.4",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
