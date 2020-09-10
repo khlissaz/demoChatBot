@@ -7,7 +7,7 @@ $(document).ready(function () {
          method: "POST",
          data: {},
          success: function (data) {
-            alert("Setup succeeds")
+            alert("Setup succeeds");
             console.log(data);
          },
          error: function (error) {

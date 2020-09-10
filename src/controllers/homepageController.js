@@ -1,76 +1,80 @@
-import request from "request";
+import request from "request"
 require("dotenv").config();
-const PAGE_ACCESS_TOKEN= process.env.PAGE_ACCESS_TOKEN;
+const PAGE_ACCESS_TOKEN=process.env.PAGE_ACCESS_TOKEN;
 
-let getHomepage=(req,res) =>{
-return res.render("homepage.ejs");
+
+let getHomepage = (req, res) => {
+    return res.render("homepage.ejs");
 };
-let getFacebookUserProfile=(req,res)=>{
+let getFacebookUserProfile = (req, res) => {
     return res.render("profile.ejs");
 }
-let setUpUserFacebookProfile=(req,res)=>{
-let data={
-  "get_started":{
-      "payload":"GET_STARTED"
-  },
-  "persistent_menu": [
-    {
-        "locale": "default",
-        "composer_input_disabled": false,
-        "call_to_actions": [
+let setUpUserFacebookProfile = (req, res) => {
+    console.log(res.PAGE_ACCESS_TOKEN)
+    let data = {
+        "get_started":{
+            "payload":"GET_STARTED"
+          },
+        "persistent_menu": [
             {
-                "type": "postback",
-                "title": "Talk to an agent",
-                "payload": "CARE_HELP"
-            },
-            {
-                "type": "postback",
-                "title": "Outfit suggestions",
-                "payload": "CURATION"
-            },
-            {
-                "type": "web_url",
-                "title": "Shop now",
-                "url": "https://www.originalcoastclothing.com/",
-                "webview_height_ratio": "full"
+                "locale": "default",
+                "composer_input_disabled": false,
+                "call_to_actions": [
+                    {
+                        "type": "postback",
+                        "title": "Talk to an agent",
+                        "payload": "CARE_HELP"
+                    },
+                    {
+                        "type": "postback",
+                        "title": "Outfit suggestions",
+                        "payload": "CURATION"
+                    },
+                    {
+                        "type": "web_url",
+                        "title": "Shop now",
+                        "url": "https://www.originalcoastclothing.com/",
+                        "webview_height_ratio": "full"
+                    }
+                ]
             }
+        ],
+
+        "whitelisted_domains": [
+            "https://trustit.herokuapp.com/",
+
         ]
-    }
-],
 
-"whitelisted_domains":[
-    "https://trustit.herokuapp.com/",
-    
-  ]
-
-};
+    };
 
     request({
-        "uri": "https://graph.facebook.com/v6.0/me/messages_profile",
+        "uri": "https://graph.facebook.com/v7.0/me/messenger_profile",
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
         "json": data
-      }, (err, res, body) => {
+    }, (err, result, body) => {
         if (!err) {
-          return res.status(200).json({
-              message:"setup done!"
-          })
+            console.log('message sent!');
+           /* return result.status(200).json({
+                message: "setup done!"
+            });*/
         } else {
-          return res.status(500).json({
-             "message": "Error from the node server"
+            console.log("Unable to send message:" +err);
+          /*  return result.status(500).json({
+                "message": "Error from the node server"
 
-          })
+            });*/
         }
-      }); 
+    });
 
     return res.status(200).json({
-    
-    message:"OK"
-});
+
+        message: "OK"
+    });
 }
 
-module.exports={
-    getHomepage:getHomepage,
-    getFacebookUserProfile:getFacebookUserProfile,
-    setUpUserFacebookProfile:setUpUserFacebookProfile
+module.exports = {
+    getHomepage: getHomepage,
+    getFacebookUserProfile: getFacebookUserProfile,
+    setUpUserFacebookProfile: setUpUserFacebookProfile
 };
