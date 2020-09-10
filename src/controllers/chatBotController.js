@@ -130,7 +130,7 @@ function handlePostback(sender_psid, received_postback) {
   } else if (payload === 'no') {
     response = { "text": "Oops, try sending another image." }
   }
-  else if (payload === 'Démarrer') {
+  else if (payload === 'GET_STARTED') {
     response = { "text": "Hi there" }
   }
 
