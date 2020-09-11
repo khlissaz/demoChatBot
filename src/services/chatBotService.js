@@ -17,7 +17,8 @@ let getFacebookUsername = (sender_psid) => {
             if (!err) {
                 //convert string to json
                 body = JSON.parse(body);
-                let username = '${body.last_name} ${body.first_name}';
+                console.log(body)
+                let username = body.last_name+" "+body.first_name;
                 console.log(username)
                 resolve(username)
             } else {
