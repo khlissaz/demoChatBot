@@ -19,6 +19,7 @@ let getFacebookUsername = (sender_psid) => {
                 //convert string to json
                 body = JSON.parse(body);
                 let username = '${body.last_name} ${body.first_name}';
+                console.log(username)
                 resolve(username)
             } else {
                 reject( "Unable to send message:" + err);
@@ -57,10 +58,10 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
                 } };
 
             //send a welcome message
-            sendMessage(sender_psid, response_first);
+           sendMessage(sender_psid, response_first);
 
             //send a image with button view main menu
-            sendMessage(sender_psid, response_second);
+          sendMessage(sender_psid, response_second);
           resolve( "done!")
         } catch (e) {
             reject(e);
