@@ -1,6 +1,5 @@
 import request from "request";
-//require ("dotenv").config();
-
+require ("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 let getFacebookUsername = (sender_psid) => {
@@ -35,7 +34,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
     return new Promise(function(resolve, reject)  {
 
         try {
-            let response_first = { "text": "Welcome ${username}" };
+            let response_first = { "text": 'Welcome ${username}' };
             let response_second = {
                 "attachment": {
                     "type": "template",
@@ -44,7 +43,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
                         "elements": [{
                             "title": "Is this the right picture?",
                             "subtitle": "Tap a button to answer.",
-                            "image_url": "URL HERE",
+                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
                             "buttons": [
                                 {
                                     "type": "postback",
@@ -84,7 +83,7 @@ let sendMessage = (sender_psid, response) => {
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v6.0/me/messages",
-        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "qs": { "access_token":PAGE_ACCESS_TOKEN },
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
