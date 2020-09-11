@@ -140,7 +140,8 @@ let handlePostback=async(sender_psid, received_postback)=> {
     case "GET_STARTED":
       //get username
      let username= await chaBotService.getFacebookUsername(sender_psid);
-      response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
+     await chaBotService.sendResponseWelcomeNewCustomer(username,sender_psid);
+     // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
       break;
     case "no":
       response = {};
@@ -154,7 +155,7 @@ let handlePostback=async(sender_psid, received_postback)=> {
 
 
   // Send the message to acknowledge the postback
-  callSendAPI(sender_psid, response);
+  //callSendAPI(sender_psid, response);
 };
 
 
