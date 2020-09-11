@@ -140,7 +140,7 @@ let handlePostback=(sender_psid, received_postback)=> {
     case "GET_STARTED":
       console.log("++++"+sender_psid);
       //get username
-     let username = chaBotService.getFacebookUsername(sender_psid);
+     let username = await chaBotService.getFacebookUsername(sender_psid);
      console.log("+++"+username);
       chaBotService.sendResponseWelcomeNewCustomer(username,sender_psid);
      // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
