@@ -4,7 +4,7 @@ import request from "request";
 //const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 let getFacebookUsername = (sender_psid) => {
-    return new Promise(function(resolve, reject)  {
+    return new Promise(function (resolve, reject) {
         // Send the HTTP request to the Messenger Platform
         let uri = "https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}";
 
@@ -29,34 +29,40 @@ let getFacebookUsername = (sender_psid) => {
 let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
     return new Promise((resolve, reject) => {
 
-        let response_first = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
-        let response_second = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [{
-                        "title": "Is this the right picture?",
-                        "subtitle": "Tap a button to answer.",
-                        "image_url": "URL HERE",
-                        "buttons": [
-                            {
-                                "type": "postback",
-                                "title": "Yes!",
-                                "payload": "yes",
-                            },
+        try {
+            let response_first = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
+            let response_second = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Is this the right picture?",
+                            "subtitle": "Tap a button to answer.",
+                            "image_url": "URL HERE",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Yes!",
+                                    "payload": "yes",
+                                },
 
-                        ],
-                    }]
-                }
-            }
-        };
+                            ],
+                        }]
+                    }
+                } };
 
-        //send a welcome message
-        sendMessage(sender_psid, response_first);
+            //send a welcome message
+            sendMessage(sender_psid, response_first);
 
-        //send a image with button view main menu
-         sendMessage(sender_psid, response_second);
+            //send a image with button view main menu
+            sendMessage(sender_psid, response_second);
+          resolve( "done!")
+        } catch (e) {
+            reject(e);
+        }
+
+
     });
 
 };
