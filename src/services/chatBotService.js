@@ -5,7 +5,8 @@ import request from "request";
 
 let getFacebookUsername = (sender_psid) => {
     return new Promise( (resolve, reject) =>{
-        // Send the HTTP request to the Messenger Platform
+       try {
+            // Send the HTTP request to the Messenger Platform
         let uri = "https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}";
 
         request({
@@ -24,6 +25,9 @@ let getFacebookUsername = (sender_psid) => {
 
             }
         });
+       } catch (error) {
+        reject(error);
+       }
     });
 };
 let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
