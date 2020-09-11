@@ -138,10 +138,10 @@ let handlePostback=(sender_psid, received_postback)=> {
 
   switch (payload) {
     case "GET_STARTED":
-      console.log(sender_psid);
+      console.log("+++"+sender_psid);
       //get username
      let username = chaBotService.getFacebookUsername(sender_psid);
-     console.log(username);
+     console.log("+++"+username);
       chaBotService.sendResponseWelcomeNewCustomer(username,sender_psid);
      // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
       break;
@@ -180,7 +180,7 @@ function callSendAPI(sender_psid, response) {
     "json": request_body
   }, (err, res, body) => {
     if (!err) {
-      console.log('message sent!')
+      console.log('***message sent!')
     } else {
       console.error("Unable to send message:" + err);
     }
