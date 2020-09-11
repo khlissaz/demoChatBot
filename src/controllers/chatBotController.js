@@ -136,7 +136,7 @@ let handlePostback=async(sender_psid, received_postback)=> {
      response = { "text": "Hi there" }
    }*/
 
-  switch (poyload) {
+  switch (payload) {
     case "GET_STARTED":
       //get username
      let username= await chaBotService.getFacebookUsername(sender_psid);
