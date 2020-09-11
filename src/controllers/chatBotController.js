@@ -139,8 +139,8 @@ let handlePostback=(sender_psid, received_postback)=> {
   switch (payload) {
     case "GET_STARTED":
       //get username
-     let username= await chaBotService.getFacebookUsername(sender_psid);
-     await chaBotService.sendResponseWelcomeNewCustomer(username,sender_psid);
+     let username= chaBotService.getFacebookUsername(sender_psid);
+      chaBotService.sendResponseWelcomeNewCustomer(username,sender_psid);
      // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
       break;
     case "no":
