@@ -30,7 +30,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
     return new Promise((resolve, reject) => {
 
         try {
-            let response_first = { "text": "سلام ${username}، كيفاه نجمو نعاونوك؟" };
+            let response_first = { "text": "Welcome ${username}" };
             let response_second = {
                 "attachment": {
                     "type": "template",
