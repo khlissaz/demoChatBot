@@ -116,23 +116,23 @@ try {
                         {
                             "type": "postback",
                             "title": "Deposer une réparation",
-                            "payload": "REPARATION",
+                            "payload": "Demander_service",
                         },
 
                         {
                             "type": "postback",
                             "title": "Acherter un produit",
-                            "payload": "PRODUIT",
+                            "payload": "Demander_service",
                         },
                         {
                             "type": "postback",
                             "title": "Donner un avis/ reclamtion",
-                            "payload": "AVIS/RECLAMATION",
+                            "payload": "Demander_service",
                         },
                         {
                             "type": "postback",
                             "title": "Connecter notre service",
-                            "payload": "GO_SERVICE",
+                            "payload": "Demander_service",
                         },
 
                     ],
