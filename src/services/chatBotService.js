@@ -43,7 +43,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
                         "template_type": "generic",
                         "elements": [{
                             "title": "Is this the right picture?",
-                            "subtitle": "Tap a button to answer.",
+                            "subtitle": "Votre service est notre engagement",
                             "image_url": "https://www.trustit.tn/assets/img/logo.png",
                             "buttons": [
                                 {
@@ -101,15 +101,84 @@ let sendMessage = (sender_psid, response) => {
 let sendMainMenu= (sender_psid)=>{
 return new Promise(async(resolve,reject)=>{
 try {
-    
+    let response= {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Our menus?",
+                    "subtitle": "Tap a button to answer.",
+                    "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": "LUNCH MAIN MENU",
+                            "payload": "MAIN_MENU",
+                        },
+
+                        {
+                            "type": "postback",
+                            "title": "DINNER MAIN MENU",
+                            "payload": "MAIN_MENU",
+                        },
+                        {
+                            "type": "postback",
+                            "title": "SHOW MAIN MENU",
+                            "payload": "MAIN_MENU",
+                        },
+
+                    ],
+                },
+
+                {
+                    "title": "Hours",
+                    "subtitle": "MON-FRI 10:00AM - 11:00PM",
+                    "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": "RESERVE A TABLE",
+                            "payload": "RESERVE_TABLE",
+                        },
+
+                    ],
+                },
+                {
+                    "title": " Request Rooms",
+                    "subtitle": "MON-FRI 10:00AM - 11:00PM",
+                    "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": "SHOW ROOMS",
+                            "payload": "SHOW_ROOMS",
+                        },
+
+                    ],
+                }
+            
+            
+            
+            
+            ]
+
+            }
+        }
+    };
+
+    //send a welcome message
+    await sendMessage(sender_psid, response);
 } catch (error) {
     reject(error);
 }
 });
 };
 
+
+
 module.exports = {
     getFacebookUsername: getFacebookUsername,
-    sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer
-
+    sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
+    sendMainMenu:sendMainMenu
 }
