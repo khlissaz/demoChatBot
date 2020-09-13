@@ -145,7 +145,7 @@ let handlePostback=(sender_psid, received_postback)=> {
       chaBotService.sendResponseWelcomeNewCustomer(username,sender_psid);
      // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
       break;
-    case "MAIN_MENU":
+    case "Demander_service":
       //send main meni=u to users
        chaBotService.sendMainMenu(sender_psid);
       break;

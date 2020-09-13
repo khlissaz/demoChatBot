@@ -42,14 +42,14 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Trust-it est le 1er réseau des réparateur de confiance en Tunisie",
+                            "title": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
                             "subtitle": "Votre service est notre objectif",
                             "image_url": "https://www.trustit.tn/assets/img/logo.png",
                             "buttons": [
                                 {
                                     "type": "postback",
                                     "title": "Demandez un service",
-                                    "payload": "Demander service",
+                                    "payload": "Demander_service",
                                 },
 
                             ],
@@ -113,24 +113,24 @@ try {
                     "buttons": [
                         {
                             "type": "postback",
-                            "title": "Derposer une réparation",
-                            "payload": "Go",
+                            "title": "Deposer une réparation",
+                            "payload": "REPARATION",
                         },
 
                         {
                             "type": "postback",
                             "title": "Acherter un produit",
-                            "payload": "Go",
+                            "payload": "PRODUIT",
                         },
                         {
                             "type": "postback",
                             "title": "Donner un avis/ reclamtion",
-                            "payload": "Go",
+                            "payload": "AVIS/RECLAMATION",
                         },
                         {
                             "type": "postback",
                             "title": "Connecter notre service",
-                            "payload": "Go",
+                            "payload": "GO_SERVICE",
                         },
 
                     ],
