@@ -115,9 +115,20 @@ let sendMainMenu = (sender_psid) => {
                             "buttons": [
                                 {
                                     "type": "postback",
-                                    "title": "Demandez un service",
-                                    "payload": "MAIN_MENU",
+                                    "title": "Deposer une reparation",
+                                    "payload": "DEPOSER_REPARATION",
                                 },
+                                {
+                                    "type": "postback",
+                                    "title": "Acheter un produit",
+                                    "payload": "ACHETER_PRODUIT",
+                                },
+                                {
+                                    "type": "postback",
+                                    "title": "Donner avis",
+                                    "payload": "AVIS_RECLAMATION",
+                                },
+
 
                             ],
                         }]
