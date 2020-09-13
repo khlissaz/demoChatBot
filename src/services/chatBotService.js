@@ -63,6 +63,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
 
             //send a image with button view main menu
             await sendMessage(sender_psid, response_second);
+            console.log("/////"+resolve);
             resolve("done!")
         } catch (e) {
             reject(e);

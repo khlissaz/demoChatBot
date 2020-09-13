@@ -147,6 +147,7 @@ let handlePostback=(sender_psid, received_postback)=> {
       break;
     case "Demander_service":
       //send main meni=u to users
+      console.log("++++++++++Demander_service");
        chaBotService.sendMainMenu(sender_psid);
       break;
     case "yes":
