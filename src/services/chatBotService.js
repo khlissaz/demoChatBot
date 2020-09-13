@@ -199,7 +199,7 @@ return new Promise(async(resolve,reject)=>{
     try {
         
 let username= await getFacebookUsername(sender_psid);
-let response = {"text":"Bonjour ${username} ,veuillez nous informer le modele de votre terminal."};
+let response = {"text":"Bonjour"+username+",veuillez nous informer le modele de votre terminal."};
 
 
 

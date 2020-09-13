@@ -73,10 +73,10 @@ let getWebhook = (req, res) => {
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
-  let response;
+  let entity=handleMessageWithEntities(received_message);
 
   // Check if the message contains text
-  if (received_message.text) {
+  if (entity==="datetime") {
 
     // Create the payload for a basic text message
     response = {
@@ -85,7 +85,7 @@ function handleMessage(sender_psid, received_message) {
 
 
   }
-  else if (received_message.attachments) {
+  else if (entity==="phone_number") {
 
     // Gets the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
@@ -119,9 +119,66 @@ function handleMessage(sender_psid, received_message) {
   callSendAPI(sender_psid, response);
 }
 
+let handleMessageWithEntities=(message)=>{
+let entitiesArr=["datetime","phone_number"];
+let entityChosen="";
+let data = {
+  "get_started": {
+      "payload": "GET_STARTED"
+  },
+  "persistent_menu": [
+      {
+          "locale": "default",
+          "composer_input_disabled": false,
+          "call_to_actions": [
+              {
+                  "type": "postback",
+                  "title": "Talk to an agent",
+                  "payload": "CARE_HELP"
+              },
+              {
+                  "type": "postback",
+                  "title": "Outfit suggestions",
+                  "payload": "CURATION"
+              },
+              {
+                  "type": "web_url",
+                  "title": "Shop now",
+                  "url": "https://www.originalcoastclothing.com/",
+                  "webview_height_ratio": "full"
+              }
+          ]
+      }
+  ],
+
+  "whitelisted_domains": [
+      "https://trustit.herokuapp.com/",
+
+  ]
+
+};
+entitiesArr.forEach((name)=>{
+let entity =firstEntity(message.nlp,name);
+if(entity && entity.confidence > 0.8){
+
+  entityChosen=name;
+  data.value=entity.value;
+  
+}
+});
+data.name=entityChosen;
+console.log("------------");
+console.log(data);
+console.log("------------");
+return data;
+}
+function firstEntity(nlp,name){
+  return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+}
+
 // Handles messaging_postbacks events
 let handlePostback = (sender_psid, received_postback) => {
-  let response;
+ // let response;
 
   // Get the payload for the postback
   let payload = received_postback.payload;
