@@ -142,14 +142,13 @@ let handlePostback = (sender_psid, received_postback) => {
       //get username
       let username = chaBotService.getFacebookUsername(sender_psid).then(function (res) { console.log("username is" + res) });
       console.log("+++" + username);
-      chaBotService.sendMainMenu(sender_psid);//
-  //    chaBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
+      chaBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
       // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
      
       break;
     case "Demander_service":
       //send main menu to users
-      console.log("++++++++++Demander_service"+payload);
+      console.log("++++++++++Demander_service");
       chaBotService.sendMainMenu(sender_psid);
       break;
     case "yes":

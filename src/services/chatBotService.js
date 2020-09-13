@@ -2,8 +2,8 @@ import request from "request";
 require("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-let  getFacebookUsername = (sender_psid) => {
-    return new Promise( (resolve, reject)=> {
+let getFacebookUsername = (sender_psid) => {
+    return new Promise((resolve, reject) => {
         try {
             // Send the HTTP request to the Messenger Platform
             let uri = "https://graph.facebook.com/" + sender_psid + "?fields=first_name,last_name,profile_pic&access_token=" + PAGE_ACCESS_TOKEN;
@@ -19,7 +19,7 @@ let  getFacebookUsername = (sender_psid) => {
                     body = JSON.parse(body);
                     console.log(body)
                     let username = body.last_name + " " + body.first_name;
-                    console.log("*******"+username)
+                    console.log("*******" + username)
                     resolve(username)
                 } else {
                     reject("Unable to send message:" + err);
@@ -32,10 +32,10 @@ let  getFacebookUsername = (sender_psid) => {
     });
 };
 let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
-    return new Promise(async (resolve, reject)=> {
+    return new Promise(async (resolve, reject) => {
 
         try {
-            let response_first = { "text": "سلام " +username+"، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? " };
+            let response_first = { "text": "سلام " + username + "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? " };
             let response_second = {
                 "attachment": {
                     "type": "template",
@@ -63,10 +63,10 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
 
             //send a image with button view main menu
             await sendMessage(sender_psid, response_second);
-            console.log("/////"+resolve);
+            console.log("/////" + resolve);
             resolve("done!")
         } catch (e) {
-            console.log("/////"+e);
+            console.log("/////" + e);
             reject(e);
         }
 
@@ -100,86 +100,87 @@ let sendMessage = (sender_psid, response) => {
 
 };
 
-let sendMainMenu= (sender_psid)=>{
-return new Promise(async(resolve,reject)=>{
-try {
-    let response= {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Nos services?",
-                    "subtitle": "Cliquez sur le bouton pour obtenir la reponse.",
-                    "image_url": "https://www.trustit.tn/assets/img/logo.png",
-                    "buttons": [
-                        {
-                            "type": "postback",
-                            "title": "Deposer une réparation",
-                            "payload": "Demander_service",
-                        },
+let sendMainMenu = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Nos services?",
+                            "subtitle": "Nous nous ferons le plaisir de vous servir.",
+                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Deposer une réparation",
+                                    "payload": "depos_reparation",
+                                },
 
-                        {
-                            "type": "postback",
-                            "title": "Acherter un produit",
-                            "payload": "Demander_service",
-                        },
-                        {
-                            "type": "postback",
-                            "title": "Donner un avis/ reclamtion",
-                            "payload": "Demander_service",
-                        },
-                        {
-                            "type": "postback",
-                            "title": "Connecter notre service",
-                            "payload": "Demander_service",
-                        },
+                                {
+                                    "type": "postback",
+                                    "title": "Acherter un produit",
+                                    "payload": "ACHAT_PRODUIT",
+                                },
+                                {
+                                    "type": "postback",
+                                    "title": "Donner un avis/ reclamtion",
+                                    "payload": "AVIS_RECLAMATION",
+                                },
+                                {
+                                    "type": "postback",
+                                    "title": "Connecter notre service",
+                                    "payload": "SERVICE_CLIENT",
+                                },
 
-                    ],
-                },
-
-                {
-                    "title": "Horaire du travail",
-                    "subtitle": "Lundi-Vendredi 8:00AM - 00:00AM /n Samedi-Dimanche 10:00 - 12:00PM " ,
-                    "image_url": "https://www.trustit.tn/assets/img/logo.png",
-                    "buttons": [
-                        {
-                            "type": "postback",
-                            "title": "Contacter notre service",
-                            "payload": "Go",
+                            ],
                         },
-
-                    ],
-                },
-                {
-                    "title": " Acherter un produit",
-                    "subtitle": " un produit",
-                    "image_url": "https://www.trustit.tn/assets/img/logo.png",
-                    "buttons": [
+/*
                         {
-                            "type": "postback",
-                            "title": "SHOW ROOMS",
-                            "payload": "SHOW_ROOMS",
-                        },
+                            "title": "Horaire du travail",
+                            "subtitle": "Lundi-Vendredi 8:00AM - 00:00AM /n Samedi-Dimanche 10:00 - 12:00PM ",
+                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Contacter notre service",
+                                    "payload": "Go",
+                                },
 
-                    ],
+                            ],
+                        },*/
+                        /*
+                        {
+                            "title": " Acherter un produit",
+                            "subtitle": " un produit",
+                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "SHOW ROOMS",
+                                    "payload": "SHOW_ROOMS",
+                                },
+
+                            ],
+                        }*/
+
+
+
+
+                        ]
+
+                    }
                 }
-            
-            
-            
-            
-            ]
+            };
 
-            }
+            //send a welcome message
+            await sendMessage(sender_psid, response);
+        } catch (error) {
+            reject(error);
         }
-    };
-
-    //send a welcome message
-    await sendMessage(sender_psid, response);
-} catch (error) {
-    reject(error);
-}
-});
+    });
 };
 
 
@@ -187,5 +188,5 @@ try {
 module.exports = {
     getFacebookUsername: getFacebookUsername,
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
-    sendMainMenu:sendMainMenu
+    sendMainMenu: sendMainMenu
 }
