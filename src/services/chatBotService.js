@@ -100,7 +100,7 @@ let sendMessage = (sender_psid, response) => {
 
 };
 
-let sendServiceListe = (sender_psid) => {
+let sendServiceList = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
             let response = {
@@ -201,5 +201,5 @@ let deposerReperation = (sender_psid) => {
 module.exports = {
     getFacebookUsername: getFacebookUsername,
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
-    sendServiceListe: sendServiceListe
+    sendServiceList: sendServiceList
 }
