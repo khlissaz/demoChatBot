@@ -101,7 +101,7 @@ let sendMessage = (sender_psid, response) => {
 };
 
 let sendMainMenu = (sender_psid) => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise( (resolve, reject) => {
         try {
             let response = {
                 "attachment": {
@@ -137,34 +137,34 @@ let sendMainMenu = (sender_psid) => {
 
                             ],
                         },
-/*
-                        {
-                            "title": "Horaire du travail",
-                            "subtitle": "Lundi-Vendredi 8:00AM - 00:00AM /n Samedi-Dimanche 10:00 - 12:00PM ",
-                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "title": "Contacter notre service",
-                                    "payload": "Go",
-                                },
-
-                            ],
-                        },*/
-                        /*
-                        {
-                            "title": " Acherter un produit",
-                            "subtitle": " un produit",
-                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
-                            "buttons": [
-                                {
-                                    "type": "postback",
-                                    "title": "SHOW ROOMS",
-                                    "payload": "SHOW_ROOMS",
-                                },
-
-                            ],
-                        }*/
+                            /*
+                                                    {
+                                                        "title": "Horaire du travail",
+                                                        "subtitle": "Lundi-Vendredi 8:00AM - 00:00AM /n Samedi-Dimanche 10:00 - 12:00PM ",
+                                                        "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                                                        "buttons": [
+                                                            {
+                                                                "type": "postback",
+                                                                "title": "Contacter notre service",
+                                                                "payload": "Go",
+                                                            },
+                            
+                                                        ],
+                                                    },*/
+                            /*
+                            {
+                                "title": " Acherter un produit",
+                                "subtitle": " un produit",
+                                "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                                "buttons": [
+                                    {
+                                        "type": "postback",
+                                        "title": "SHOW ROOMS",
+                                        "payload": "SHOW_ROOMS",
+                                    },
+    
+                                ],
+                            }*/
 
 
 
