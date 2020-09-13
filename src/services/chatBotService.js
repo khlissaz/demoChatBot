@@ -101,7 +101,7 @@ let sendMessage = (sender_psid, response) => {
 };
 
 let sendMainMenu = (sender_psid) => {
-    return new Promise( (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             let response = {
                 "attachment": {
