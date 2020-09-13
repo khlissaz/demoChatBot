@@ -176,10 +176,11 @@ let sendMainMenu = (sender_psid) => {
             };
 
             //send a welcome message
-            await sendMessage(sender_psid, response);
+            await sendMessage(sender_psid,response);
             console.log("/////" + resolve);
-            resolve("done!")
+           // resolve("done!")
         } catch (error) {
+            console.log("/////" + error);
             reject(error);
         }
     });
