@@ -109,68 +109,18 @@ let sendMainMenu = (sender_psid) => {
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Nos services?",
-                            "subtitle": "Nous nous ferons le plaisir de vous servir.",
+                            "title": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
+                            "subtitle": "Votre service est notre objectif",
                             "image_url": "https://www.trustit.tn/assets/img/logo.png",
                             "buttons": [
                                 {
                                     "type": "postback",
-                                    "title": "Deposer une réparation",
-                                    "payload": "depos_reparation",
-                                },
-
-                                {
-                                    "type": "postback",
-                                    "title": "Acherter un produit",
-                                    "payload": "ACHAT_PRODUIT",
-                                },
-                                {
-                                    "type": "postback",
-                                    "title": "Donner un avis/ reclamtion",
-                                    "payload": "AVIS_RECLAMATION",
-                                },
-                                {
-                                    "type": "postback",
-                                    "title": "Connecter notre service",
-                                    "payload": "SERVICE_CLIENT",
+                                    "title": "Demandez un service",
+                                    "payload": "Demander_service",
                                 },
 
                             ],
-                        },
-                            /*
-                                                    {
-                                                        "title": "Horaire du travail",
-                                                        "subtitle": "Lundi-Vendredi 8:00AM - 00:00AM /n Samedi-Dimanche 10:00 - 12:00PM ",
-                                                        "image_url": "https://www.trustit.tn/assets/img/logo.png",
-                                                        "buttons": [
-                                                            {
-                                                                "type": "postback",
-                                                                "title": "Contacter notre service",
-                                                                "payload": "Go",
-                                                            },
-                            
-                                                        ],
-                                                    },*/
-                            /*
-                            {
-                                "title": " Acherter un produit",
-                                "subtitle": " un produit",
-                                "image_url": "https://www.trustit.tn/assets/img/logo.png",
-                                "buttons": [
-                                    {
-                                        "type": "postback",
-                                        "title": "SHOW ROOMS",
-                                        "payload": "SHOW_ROOMS",
-                                    },
-    
-                                ],
-                            }*/
-
-
-
-
-                        ]
-
+                        }]
                     }
                 }
             };
