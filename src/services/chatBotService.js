@@ -66,6 +66,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
             console.log("/////"+resolve);
             resolve("done!")
         } catch (e) {
+            console.log("/////"+e);
             reject(e);
         }
 
