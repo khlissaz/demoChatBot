@@ -144,11 +144,11 @@ let handlePostback = (sender_psid, received_postback) => {
       console.log("+++" + username);
       chaBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
       // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
-      chaBotService.sendMainMenu(sender_psid);
+     
       break;
     case "Demander_service":
-      //send main meni=u to users
-      console.log("++++++++++Demander_service");
+      //send main menu to users
+      console.log("++++++++++Demander_service"+payload);
       chaBotService.sendMainMenu(sender_psid);
       break;
     case "yes":
