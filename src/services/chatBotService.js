@@ -59,7 +59,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
             };
 
             //send a welcome message
-            await sendMessage(sender_psid, response_first);
+           // await sendMessage(sender_psid, response_first);
 
             //send a image with button view main menu
             await sendMessage(sender_psid, response_second);
