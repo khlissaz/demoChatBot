@@ -223,9 +223,15 @@ let handlePostback = (sender_psid, received_postback) => {
     case "SMATPHONE ":
       chaBotService.handleDeposRep(sender_psid);
       break;
-      case "RETOUR_SERVICE_LISTE":
-            await chatBotService.sendMessageAskingModele(sender_psid);
-            break;
+      case "yes":
+        response = { text: "Thank you!" };
+        callSendAPI(sender_psid, response);
+        break;
+    case "no":
+        response = { text: "Please try another image." };
+        callSendAPI(sender_psid, response);
+        break;
+        default:
       console.log("Somthing wrong with switch case payload");
   }
 
