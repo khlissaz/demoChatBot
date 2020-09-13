@@ -35,15 +35,15 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-            let response_first = { "text": "سلام " + username + "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? " };
+           // let response_first = { "text": "سلام " + username + "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? " };
             let response_second = {
                 "attachment": {
                     "type": "template",
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
-                            "subtitle": "Votre service est notre objectif",
+                            "title": "سلام " +username.body + "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? ",
+                            "subtitle": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
                             "image_url": "https://www.trustit.tn/assets/img/logo.png",
                             "buttons": [
                                 {
@@ -100,7 +100,7 @@ let sendMessage = (sender_psid, response) => {
 
 };
 
-let sendMainMenu = (sender_psid) => {
+let sendServiceListe = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
             let response = {
@@ -111,11 +111,11 @@ let sendMainMenu = (sender_psid) => {
                         "elements": [{
                             "title": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
                             "subtitle": "Votre service est notre objectif",
-                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                           // "image_url": "https://www.trustit.tn/assets/img/logo.png",
                             "buttons": [
                                 {
                                     "type": "postback",
-                                    "title": "Deposer une reparation",
+                                    "title": "Deposer une réparation",
                                     "payload": "DEPOSER_REPARATION",
                                 },
                                 {
@@ -147,10 +147,59 @@ let sendMainMenu = (sender_psid) => {
     });
 };
 
+let deposerReperation = (sender_psid) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response = {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
+                            "subtitle": "Votre service est notre objectif",
+                            //"image_url": "https://www.trustit.tn/assets/img/logo.png",
+                            "buttons": [
+                                {
+                                    "type": "postback",
+                                    "title": "Reparation d'un smartophone",
+                                    "payload": "SMATPHONE",
+                                },
+                                {
+                                    "type": "postback",
+                                    "title": "Reparation d'un pc",
+                                    "payload": "ACHETER_PRODUIT",
+                                },
+                                {
+                                    "type": "postback",
+                                    "title": "Donner avis",
+                                    "payload": "AVIS_RECLAMATION",
+                                },
+
+
+                            ],
+                        }]
+                    }
+                }
+            };
+
+            //send a welcome message
+            await sendMessage(sender_psid, response);
+            console.log("/////" + resolve);
+            // resolve("done!")
+        } catch (error) {
+            console.log("/////" + error);
+            reject(error);
+        }
+    });
+};
+
+
+
 
 
 module.exports = {
     getFacebookUsername: getFacebookUsername,
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
-    sendMainMenu: sendMainMenu
+    sendServiceListe: sendServiceListe
 }
