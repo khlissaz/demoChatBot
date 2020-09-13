@@ -116,7 +116,7 @@ let sendMainMenu = (sender_psid) => {
                                 {
                                     "type": "postback",
                                     "title": "Demandez un service",
-                                    "payload": "Demander_service",
+                                    "payload": "MAIN_MENU",
                                 },
 
                             ],
