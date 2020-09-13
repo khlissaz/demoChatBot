@@ -75,30 +75,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
 
 };
 
-let sendMessage = (sender_psid, response) => {
-    // Construct the message body
-    let request_body = {
-        "recipient": {
-            "id": sender_psid
-        },
-        "message": response
-    }
 
-    // Send the HTTP request to the Messenger Platform
-    request({
-        "uri": "https://graph.facebook.com/v6.0/me/messages",
-        "qs": { "access_token": PAGE_ACCESS_TOKEN },
-        "method": "POST",
-        "json": request_body
-    }, (err, res, body) => {
-        if (!err) {
-            console.log('*****message sent!')
-        } else {
-            console.error("Unable to send message:" + err);
-        }
-    });
-
-};
 
 let sendServiceList = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
@@ -168,12 +145,12 @@ let deposerReperation = (sender_psid) => {
                                 {
                                     "type": "postback",
                                     "title": "Reparation d'un pc",
-                                    "payload": "ACHETER_PRODUIT",
+                                    "payload": "ORDINATEUR",
                                 },
                                 {
                                     "type": "postback",
-                                    "title": "Donner avis",
-                                    "payload": "AVIS_RECLAMATION",
+                                    "title": "Reparation d'un console",
+                                    "payload": "CONSOLE",
                                 },
 
 
@@ -212,11 +189,71 @@ let response = {"text":"Bonjour"+username+",veuillez nous informer le modele de 
 });
 }
 
+let sendMessageAskingPhoneNumber = (sender_id) => {
+    let request_body = {
+        "recipient": {
+            "id": sender_id
+        },
+        "messaging_type": "RESPONSE",
+        "message": {
+            "text": "Thank you. And what's the best phone number for us to reach you at?",
+            "quick_replies": [
+                {
+                    "content_type": "user_phone_number",
+                }
+            ]
+        }
+    };
 
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v6.0/me/messages",
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "method": "POST",
+        "json": request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    });
+};
 
+let goBackToServiceList = (sender_psid) => {
+    sendServiceList(sender_psid);
+};
+
+let sendMessage = (sender_psid, response) => {
+    // Construct the message body
+    let request_body = {
+        "recipient": {
+            "id": sender_psid
+        },
+        "message": response
+    }
+
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v6.0/me/messages",
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "method": "POST",
+        "json": request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('*****message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    });
+
+};
 module.exports = {
     getFacebookUsername: getFacebookUsername,
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
     sendServiceList: sendServiceList,
-    handleDeposRep:handleDeposRep
+    handleDeposRep:handleDeposRep,
+    deposerReperation:deposerReperation,
+    sendMessageAskingPhoneNumber:sendMessageAskingPhoneNumber,
+    goBackToServiceList  :goBackToServiceList ,
 }

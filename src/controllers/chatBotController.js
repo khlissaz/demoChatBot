@@ -5,6 +5,13 @@ import chaBotService from "../services/chatBotService";
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
+let user = {
+  name: "",
+  phoneNumber: "",
+  time: "",
+  createdAt: ""
+};
+
 let postWebhook = (req, res) => {
 
   // Parse the request body from the POST
@@ -71,114 +78,117 @@ let getWebhook = (req, res) => {
   }
 };
 
-// Handles messages events
-function handleMessage(sender_psid, received_message) {
-  let entity=handleMessageWithEntities(received_message);
 
-  // Check if the message contains text
-  if (entity==="datetime") {
-
-    // Create the payload for a basic text message
-    response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
-    }
-
-
-  }
-  else if (entity==="phone_number") {
-
-    // Gets the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url;
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Is this the right picture?",
-            "subtitle": "Tap a button to answer.",
-            "image_url": attachment_url,
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "Yes!",
-                "payload": "yes",
-              },
-              {
-                "type": "postback",
-                "title": "No!",
-                "payload": "no",
-              }
-            ],
-          }]
-        }
-      }
-    }
-  }
-  // Sends the response message
-  callSendAPI(sender_psid, response);
-}
-
-let handleMessageWithEntities=(message)=>{
-let entitiesArr=["datetime","phone_number"];
-let entityChosen="";
-let data = {
-  "get_started": {
+let handleMessageWithEntities = (message) => {
+  let entitiesArr = ["datetime", "phone_number"];
+  let entityChosen = "";
+  let data = {
+    "get_started": {
       "payload": "GET_STARTED"
-  },
-  "persistent_menu": [
+    },
+    "persistent_menu": [
       {
-          "locale": "default",
-          "composer_input_disabled": false,
-          "call_to_actions": [
-              {
-                  "type": "postback",
-                  "title": "Talk to an agent",
-                  "payload": "CARE_HELP"
-              },
-              {
-                  "type": "postback",
-                  "title": "Outfit suggestions",
-                  "payload": "CURATION"
-              },
-              {
-                  "type": "web_url",
-                  "title": "Shop now",
-                  "url": "https://www.originalcoastclothing.com/",
-                  "webview_height_ratio": "full"
-              }
-          ]
+        "locale": "default",
+        "composer_input_disabled": false,
+        "call_to_actions": [
+          {
+            "type": "postback",
+            "title": "Talk to an agent",
+            "payload": "CARE_HELP"
+          },
+          {
+            "type": "postback",
+            "title": "Outfit suggestions",
+            "payload": "CURATION"
+          },
+          {
+            "type": "web_url",
+            "title": "Shop now",
+            "url": "https://www.originalcoastclothing.com/",
+            "webview_height_ratio": "full"
+          }
+        ]
       }
-  ],
+    ],
 
-  "whitelisted_domains": [
+    "whitelisted_domains": [
       "https://trustit.herokuapp.com/",
 
-  ]
+    ]
 
-};
-entitiesArr.forEach((name)=>{
-let entity =firstEntity(message.nlp,name);
-if(entity && entity.confidence > 0.8){
+  };
+  entitiesArr.forEach((name) => {
+    let entity = firstEntity(message.nlp, name);
+    if (entity && entity.confidence > 0.8) {
 
-  entityChosen=name;
-  data.value=entity.value;
-  
+      entityChosen = name;
+      data.value = entity.value;
+
+    }
+  });
+  data.name = entityChosen;
+  console.log("------------");
+  console.log(data);
+  console.log("------------");
+  return data;
 }
-});
-data.name=entityChosen;
-console.log("------------");
-console.log(data);
-console.log("------------");
-return data;
-}
-function firstEntity(nlp,name){
+function firstEntity(nlp, name) {
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
+// Handles messages events
+let handleMessage = async (sender_psid, message) => {
+  //checking quick reply
+  if (message && message.quick_reply && message.quick_reply.payload) {
+      if (message === "" ) {
+          //asking about phone number
+          
+
+          await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
+          return;
+      }
+      // pay load is a phone number
+      if (message.quick_reply.payload !== " ") {
+          //done a reservation
+          // npm install --save moment to use moment
+          user.phoneNumber = message.quick_reply.payload;
+          user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+          //send a notification to Telegram Group chat by Telegram bot.
+          await chatBotService.sendNotificationToTelegram(user);
+
+          // send messages to the user
+          await chatBotService.sendMessageDoneReserveTable(sender_psid);
+      }
+      return;
+  }
+
+  //handle text message
+  let entity = handleMessageWithEntities(message);
+
+  if (entity.name === "datetime") {
+      //handle quick reply message: asking about the party size , how many people
+      user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
+  
+  } else if (entity.name === "phone_number") {
+      //handle quick reply message: done reserve table
+
+      user.phoneNumber = entity.value;
+      user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+      //send a notification to Telegram Group chat by Telegram bot.
+  // await chatBotService.sendNotificationToTelegram(user);
+
+      // send messages to the user
+     // await chatBotService.sendMessageDoneReserveTable(sender_psid);
+  } else {
+      //default reply
+  }
+
+  //handle attachment message
+};
+
 
 // Handles messaging_postbacks events
 let handlePostback = (sender_psid, received_postback) => {
- // let response;
+  // let response;
 
   // Get the payload for the postback
   let payload = received_postback.payload;
@@ -204,12 +214,18 @@ let handlePostback = (sender_psid, received_postback) => {
       break;
     case "Demander_service":
       //send service list to users
-      chaBotService.sendServiceList(sender_psid).then(function (res) { console.log( res) });
-      
+      chaBotService.sendServiceList(sender_psid).then(function (res) { console.log(res) });
+
       break;
     case "DEPOSER_REPARATION":
-     chaBotService.handleDeposRep(sender_psid);
+      chaBotService.deposerReperation(sender_psid);
       break;
+    case "SMATPHONE ":
+      chaBotService.handleDeposRep(sender_psid);
+      break;
+      case "RETOUR_SERVICE_LISTE":
+            await chatBotService.goBackToServiceList(sender_psid);
+            break;
     default:
       console.log("Somthing wrong with switch case payload");
   }
