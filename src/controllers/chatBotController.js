@@ -223,10 +223,9 @@ let handlePostback = (sender_psid, received_postback) => {
     case "SMATPHONE ":
       chaBotService.handleDeposRep(sender_psid);
       break;
-    /*  case "RETOUR_SERVICE_LISTE":
-            await chatBotService.goBackToServiceList(sender_psid);
-            break;*/
-    default:
+      case "RETOUR_SERVICE_LISTE":
+            await chatBotService.sendMessageAskingModele(sender_psid);
+            break;
       console.log("Somthing wrong with switch case payload");
   }
 

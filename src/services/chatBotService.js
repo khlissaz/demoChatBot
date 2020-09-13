@@ -220,6 +220,37 @@ let sendMessageAskingPhoneNumber = (sender_id) => {
     });
 };
 
+let sendMessageAskingModele = (sender_id) => {
+    let request_body = {
+        "recipient": {
+            "id": sender_id
+        },
+        "messaging_type": "RESPONSE",
+        "message": {
+            "text": "Merci de nous envoyer le modele exacte de votre smartphone",
+            "quick_replies": [
+                {
+                    "content_type": "user_modele",
+                }
+            ]
+        }
+    };
+
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v6.0/me/messages",
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "method": "POST",
+        "json": request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    });
+};
+
 let goBackToServiceList = (sender_psid) => {
     sendServiceList(sender_psid);
 };
@@ -255,5 +286,6 @@ module.exports = {
     handleDeposRep:handleDeposRep,
     deposerReperation:deposerReperation,
     sendMessageAskingPhoneNumber:sendMessageAskingPhoneNumber,
+    sendMessageAskingModele:sendMessageAskingModele,
     goBackToServiceList  :goBackToServiceList ,
 }
