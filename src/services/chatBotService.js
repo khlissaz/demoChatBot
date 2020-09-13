@@ -194,12 +194,29 @@ let deposerReperation = (sender_psid) => {
     });
 };
 
+let handleDeposRep =(sender_psid)=>{
+return new Promise(async(resolve,reject)=>{
+    try {
+        
+let username= await getFacebookUsername(sender_psid);
+let response = {"text":"Bonjour ${username} ,veuillez nous informer le modele de votre terminal."};
 
+
+
+
+        await sendMessage(sender_psid, response);
+
+    } catch (error) {
+        reject(error)
+    }
+});
+}
 
 
 
 module.exports = {
     getFacebookUsername: getFacebookUsername,
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
-    sendServiceList: sendServiceList
+    sendServiceList: sendServiceList,
+    handleDeposRep:handleDeposRep
 }

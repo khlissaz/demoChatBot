@@ -146,13 +146,12 @@ let handlePostback = (sender_psid, received_postback) => {
       // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
       break;
     case "Demander_service":
-      //send main menu to users
-      console.log("++++++++++Demander_service");
+      //send service list to users
       chaBotService.sendServiceList(sender_psid).then(function (res) { console.log( res) });
-      console.log("++++++++++chatbot");
+      
       break;
-    case "yes":
-      response = {};
+    case "DEPOSER_REPARATION":
+     chaBotService.handleDeposRep(sender_psid);
       break;
     default:
       console.log("Somthing wrong with switch case payload");
