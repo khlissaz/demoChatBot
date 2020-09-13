@@ -120,7 +120,7 @@ function handleMessage(sender_psid, received_message) {
 }
 
 // Handles messaging_postbacks events
-let handlePostback=(sender_psid, received_postback)=> {
+let handlePostback = (sender_psid, received_postback) => {
   let response;
 
   // Get the payload for the postback
@@ -138,17 +138,18 @@ let handlePostback=(sender_psid, received_postback)=> {
 
   switch (payload) {
     case "GET_STARTED":
-      console.log("++++"+sender_psid);
+      console.log("++++" + sender_psid);
       //get username
-     let username =   chaBotService.getFacebookUsername(sender_psid).then(function(res){console.log("username is" +res)});
-     console.log("+++"+username);
-      chaBotService.sendResponseWelcomeNewCustomer(username,sender_psid);
-     // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
+      let username = chaBotService.getFacebookUsername(sender_psid).then(function (res) { console.log("username is" + res) });
+      console.log("+++" + username);
+      chaBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
+      // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
+      chaBotService.sendMainMenu(sender_psid);
       break;
     case "Demander_service":
       //send main meni=u to users
       console.log("++++++++++Demander_service");
-       chaBotService.sendMainMenu(sender_psid);
+      chaBotService.sendMainMenu(sender_psid);
       break;
     case "yes":
       response = {};
