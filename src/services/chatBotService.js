@@ -35,21 +35,21 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
     return new Promise(async (resolve, reject)=> {
 
         try {
-            let response_first = { "text": "سلام " +username+"، كيفاه نجمو نعاونوك؟" };
+            let response_first = { "text": "سلام " +username+"، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? " };
             let response_second = {
                 "attachment": {
                     "type": "template",
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Is this the right picture?",
-                            "subtitle": "Votre service est notre engagement",
+                            "title": "Trust-it est le 1er réseau des réparateur de confiance en Tunisie",
+                            "subtitle": "Votre service est notre objectif",
                             "image_url": "https://www.trustit.tn/assets/img/logo.png",
                             "buttons": [
                                 {
                                     "type": "postback",
-                                    "title": "SHOW MAIN MENU",
-                                    "payload": "MAIN_MENU",
+                                    "title": "Demandez un service",
+                                    "payload": "Demander service",
                                 },
 
                             ],
@@ -107,46 +107,51 @@ try {
             "payload": {
                 "template_type": "generic",
                 "elements": [{
-                    "title": "Our menus?",
-                    "subtitle": "Tap a button to answer.",
+                    "title": "Nos services?",
+                    "subtitle": "Cliquez sur le bouton pour obtenir la reponse.",
                     "image_url": "https://www.trustit.tn/assets/img/logo.png",
                     "buttons": [
                         {
                             "type": "postback",
-                            "title": "LUNCH MAIN MENU",
-                            "payload": "MAIN_MENU",
+                            "title": "Derposer une réparation",
+                            "payload": "Go",
                         },
 
                         {
                             "type": "postback",
-                            "title": "DINNER MAIN MENU",
-                            "payload": "MAIN_MENU",
+                            "title": "Acherter un produit",
+                            "payload": "Go",
                         },
                         {
                             "type": "postback",
-                            "title": "SHOW MAIN MENU",
-                            "payload": "MAIN_MENU",
+                            "title": "Donner un avis/ reclamtion",
+                            "payload": "Go",
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Connecter notre service",
+                            "payload": "Go",
                         },
 
                     ],
                 },
 
                 {
-                    "title": "Hours",
-                    "subtitle": "MON-FRI 10:00AM - 11:00PM",
+                    "title": "Horaire du travail",
+                    "subtitle": "Lundi-Vendredi 8:00AM - 00:00AM /n Samedi-Dimanche 10:00 - 12:00PM " ,
                     "image_url": "https://www.trustit.tn/assets/img/logo.png",
                     "buttons": [
                         {
                             "type": "postback",
-                            "title": "RESERVE A TABLE",
-                            "payload": "RESERVE_TABLE",
+                            "title": "Contacter notre service",
+                            "payload": "Go",
                         },
 
                     ],
                 },
                 {
-                    "title": " Request Rooms",
-                    "subtitle": "MON-FRI 10:00AM - 11:00PM",
+                    "title": " Acherter un produit",
+                    "subtitle": " un produit",
                     "image_url": "https://www.trustit.tn/assets/img/logo.png",
                     "buttons": [
                         {
