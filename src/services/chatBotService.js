@@ -3,32 +3,22 @@ require("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 let getFacebookUsername = (sender_psid) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            // Send the HTTP request to the Messenger Platform
-            let uri = "https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}";
-
-            request({
-                "uri": uri,
-
-                "method": "GET",
-
-            }, (err, res, body) => {
-                if (!err) {
-                    //convert string to json
-                    body = JSON.parse(body);
-                    console.log(body)
-                    let username = body.last_name + " " + body.first_name;
-                    console.log("*******" + username)
-                    resolve(username)
-                } else {
-                    reject("Unable to send message:" + err);
-
-                }
-            });
-        } catch (error) {
-            reject(error);
-        }
+    return new Promise((resolve, reject) => {
+        // Send the HTTP request to the Messenger Platform
+        let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
+        request({
+            "uri": uri,
+            "method": "GET",
+        }, (err, res, body) => {
+            if (!err) {
+                //convert string to json object
+                body = JSON.parse(body);
+                let username = `${body.last_name} ${body.first_name}`;
+                resolve(username);
+            } else {
+                reject("Unable to send message:" + err);
+            }
+        });
     });
 };
 let sendResponseWelcomeNewCustomer = (username, sender_psid) => {

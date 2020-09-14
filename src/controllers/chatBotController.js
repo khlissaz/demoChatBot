@@ -1,5 +1,5 @@
-require("dotenv").config();
 import request from "request";
+require("dotenv").config();
 import chaBotService from "../services/chatBotService";
 
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
@@ -205,12 +205,11 @@ let handlePostback = (sender_psid, received_postback) => {
 
   switch (payload) {
     case "GET_STARTED":
-      console.log("++++" + sender_psid);
       //get facebook username
-      let username = await chatBotService.getFacebookUsername(sender_psid);
+      let username =  chatBotService.getFacebookUsername(sender_psid);
       user.name = username;
-      chaBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
-      // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
+      //send welcome response to users
+      chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
       break;
     case "Demander_service":
       //send service list to users
