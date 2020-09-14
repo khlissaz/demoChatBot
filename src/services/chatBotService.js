@@ -269,6 +269,85 @@ let sendMessage = (sender_psid, response) => {
     });
 
 };
+let  sendMessageDoneDeposerReperation= async  (sender_id) => {
+    try {
+        let response = {
+            "attachment": {
+                "type": "image",
+                "payload": {
+                    "url": "https://bit.ly/giftDonalTrump"
+                }
+            }
+        };
+         sendMessage(sender_id, response);
+
+        //get facebook username
+        let username = await getFacebookUsername(sender_id);
+
+        //send another message
+        let response2 = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": `Done! \nBien reçu le service client va vous appeler dès que possible ${username}.\n \nSouhaitez-vous consulter notre liste de services?`,
+                    "buttons": [
+                        {
+                            "type": "postback",
+                            "title": "Demander un service",
+                            "payload": "Demander_service"
+                        },
+                        {
+                            "type":"phone_number",
+                            "title":"☎ Numéro de contact",
+                            "payload":"+27887889"
+                        }
+                    ]
+                }
+            }
+        };
+        await sendMessage(sender_id, response2);
+    } catch (e) {
+        console.log(e);
+    }
+
+};
+
+let sendNotificationToTelegram = (user) => {
+    return new Promise((resolve, reject) => {
+        try {
+            let request_body = {
+                chat_id: process.env.TELEGRAM_GROUP_ID,
+                parse_mode: "HTML",
+                text: `
+| --- <b>A new reservation</b> --- |
+| ------------------------------------------------|
+| 1. Username: <b>${user.name}</b>   |
+| 2. Phone number: <b>${user.phoneNumber}</b> |
+| 3. Time: <b>${user.time}</b> ||
+| 4. Created at: ${user.createdAt} |
+| ------------------------------------------------ |                           
+      `
+            };
+
+            // Send the HTTP request to the Telegram
+            request({
+                "uri": `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+                "method": "POST",
+                "json": request_body
+            }, (err, res, body) => {
+                if (!err) {
+                    resolve('done!')
+                } else {
+                    reject("Unable to send message:" + err);
+                }
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 module.exports = {
     getFacebookUsername: getFacebookUsername,
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
@@ -278,4 +357,6 @@ module.exports = {
     sendMessageAskingPhoneNumber:sendMessageAskingPhoneNumber,
     sendMessageAskingModele:sendMessageAskingModele,
     goBackToServiceList  :goBackToServiceList ,
+    sendNotificationToTelegram:sendNotificationToTelegram,
+    sendMessageDoneDeposerReperation:sendMessageDoneDeposerReperation
 }

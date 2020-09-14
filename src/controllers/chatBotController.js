@@ -139,50 +139,45 @@ function firstEntity(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
   if (message && message.quick_reply && message.quick_reply.payload) {
-      if (message === "" ) {
-          //asking about phone number
-          
+   
+    // pay load is a phone number
+    if (message.quick_reply.payload !== " ") {
+        //done a reservation
+        // npm install --save moment to use moment
+        user.phoneNumber = message.quick_reply.payload;
+        user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+        //send a notification to Telegram Group chat by Telegram bot.
+        await chatBotService.sendNotificationToTelegram(user);
 
-          await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
-          return;
-      }
-      // pay load is a phone number
-      if (message.quick_reply.payload !== " ") {
-          //done a reservation
-          // npm install --save moment to use moment
-          user.phoneNumber = message.quick_reply.payload;
-          user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-          //send a notification to Telegram Group chat by Telegram bot.
-          await chatBotService.sendNotificationToTelegram(user);
+        // send messages to the user
+        await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+    }
+    return;
+}
 
-          // send messages to the user
-          await chatBotService.sendMessageDoneReserveTable(sender_psid);
-      }
-      return;
-  }
+//handle text message
+let entity = handleMessageWithEntities(message);
 
-  //handle text message
-  let entity = handleMessageWithEntities(message);
+if (entity.name === "datetime") {
+    //handle quick reply message: asking about the party size , how many people
+    user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
 
-  if (entity.name === "datetime") {
-      //handle quick reply message: asking about the party size , how many people
-      user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
-  
-  } else if (entity.name === "phone_number") {
-      //handle quick reply message: done reserve table
+    await chatBotService.sendMessageAskingQuality(sender_psid);
+} else if (entity.name === "phone_number") {
+    //handle quick reply message: done reserve table
 
-      user.phoneNumber = entity.value;
-      user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-      //send a notification to Telegram Group chat by Telegram bot.
-  // await chatBotService.sendNotificationToTelegram(user);
+    user.phoneNumber = entity.value;
+    user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+    //send a notification to Telegram Group chat by Telegram bot.
+    await chatBotService.sendNotificationToTelegram(user);
 
-      // send messages to the user
-     // await chatBotService.sendMessageDoneReserveTable(sender_psid);
-  } else {
-      //default reply
-  }
+    // send messages to the user
+    await chatBotService.sendMessageDoneReserveTable(sender_psid);
+} else {
+    //default reply
+}
 
-  //handle attachment message
+//handle attachment message
 };
 
 
