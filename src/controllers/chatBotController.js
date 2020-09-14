@@ -219,8 +219,8 @@ let handlePostback = (sender_psid, received_postback) => {
     case "DEPOSER_REPARATION":
       chatBotService.deposerReperation(sender_psid);
       break;
-    case "SMATPHONE":
-      chaBotService.sendMessageAskingModele(sender_psid);
+    case "SMARTPHONE":
+      chatBotService.handleDeposRep(sender_psid);
       break;
       case "yes":
         response = { text: "Thank you!" };

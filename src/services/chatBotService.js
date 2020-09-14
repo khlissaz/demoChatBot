@@ -129,8 +129,8 @@ let deposerReperation = (sender_psid) => {
                             "buttons": [
                                 {
                                     "type": "postback",
-                                    "title": "Reparation d'un smartophone",
-                                    "payload": "SMATPHONE",
+                                    "title": "Réparation d'un smartophone",
+                                    "payload": "SMARTPHONE",
                                 },
                                 {
                                     "type": "postback",
