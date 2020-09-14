@@ -124,7 +124,7 @@ let deposerReperation = (sender_psid) => {
                         "template_type": "generic",
                         "elements": [{
                             "title": "Service aux utilisateurs de Smartphones, Laptops et Consoles de jeux pour des réparations de confiance grâce à un réseau de réparateurs compétents sur tout le territoire Tunisien",
-                            "subtitle": "Votre service est notre objectif",
+                           // "subtitle": "Votre service est notre objectif",
                             "image_url": "https://technews.tn/wp-content/uploads/2017/10/20376077_835954156564895_5452148611624838675_n.png",
                             "buttons": [
                                 {
@@ -166,7 +166,7 @@ return new Promise(async(resolve,reject)=>{
     try {
         
 let username= await getFacebookUsername(sender_psid);
-let response = {"text":"Bonjour"+username+",veuillez nous informer le modele de votre terminal."};
+let response = {"text":"Veuillez "+username+" nous informer le modele de votre terminal."};
 
 
 
@@ -290,7 +290,7 @@ let  sendMessageDoneDeposerReperation= async  (sender_id) => {
                 "type": "template",
                 "payload": {
                     "template_type": "button",
-                    "text": `Done! \nBien reçu le service client va vous appeler dès que possible ${username}.\n \nSouhaitez-vous consulter notre liste de services?`,
+                    "text": `Bien reçu! \nLe service client va vous appeler dès que possible ${username}.\n \nSouhaitez-vous consulter notre liste de services?`,
                     "buttons": [
                         {
                             "type": "postback",
@@ -324,8 +324,7 @@ let sendNotificationToTelegram = (user) => {
 | ------------------------------------------------|
 | 1. Username: <b>${user.name}</b>   |
 | 2. Phone number: <b>${user.phoneNumber}</b> |
-| 3. Time: <b>${user.time}</b> ||
-| 4. Created at: ${user.createdAt} |
+| 3. Created at: ${user.createdAt} |
 | ------------------------------------------------ |                           
       `
             };
