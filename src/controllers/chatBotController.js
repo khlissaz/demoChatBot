@@ -206,7 +206,7 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-      let username =  chatBotService.getFacebookUsername(sender_psid);
+      let username = chaBotService.getFacebookUsername (sender_psid);
       user.name = username;
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
