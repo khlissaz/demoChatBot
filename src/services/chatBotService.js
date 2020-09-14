@@ -123,9 +123,9 @@ let deposerReperation = (sender_psid) => {
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
+                            "title": "Service aux utilisateurs de Smartphones, Laptops et Consoles de jeux pour des réparations de confiance grâce à un réseau de réparateurs compétents sur tout le territoire Tunisien",
                             "subtitle": "Votre service est notre objectif",
-                            "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcStu0lMZR0ta-iUUvEh3atjFlQs_m8k1YriHg&usqp=CAU",
+                            "image_url": "https://technews.tn/wp-content/uploads/2017/10/20376077_835954156564895_5452148611624838675_n.png",
                             "buttons": [
                                 {
                                     "type": "postback",
