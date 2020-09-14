@@ -206,9 +206,9 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       console.log("++++" + sender_psid);
-      //get username
-      let username = chaBotService.getFacebookUsername(sender_psid).then(function (res) { console.log("username is" + res) });
-      console.log("+++" + username);
+      //get facebook username
+      let username = await chatBotService.getFacebookUsername(sender_psid);
+      user.name = username;
       chaBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
       // response = { "text": "سلام {username}$، كيفاه نجمو نعاونوك؟" };
       break;
@@ -220,7 +220,7 @@ let handlePostback = (sender_psid, received_postback) => {
     case "DEPOSER_REPARATION":
       chaBotService.deposerReperation(sender_psid);
       break;
-    case "SMATPHONE ":
+    case "SMATPHONE":
       chaBotService.handleDeposRep(sender_psid);
       break;
       case "yes":

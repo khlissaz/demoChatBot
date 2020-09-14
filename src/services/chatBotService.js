@@ -6,7 +6,7 @@ let getFacebookUsername = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
             // Send the HTTP request to the Messenger Platform
-            let uri = "https://graph.facebook.com/" + sender_psid + "?fields=first_name,last_name,profile_pic&access_token=" + PAGE_ACCESS_TOKEN;
+            let uri = "https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}";
 
             request({
                 "uri": uri,
@@ -35,7 +35,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
     return new Promise(async (resolve, reject) => {
 
         try {
-           // let response_first = { "text": "سلام " + username + "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? " };
+           // let response_first = { "text": "سلام " + username + "، كيفاه نجمو نعاونوك؟ /g Comment pouvons-nous vous aider exactement ? " };
             let response_second = {
                 "attachment": {
                     "type": "template",
@@ -44,7 +44,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
                         "elements": [{
                             "title": "سلام " +username.body + "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? ",
                             "subtitle": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
-                            "image_url": "https://www.trustit.tn/assets/img/logo.png",
+                            "image_url": "https://statics.trustit.tn/categories/1589646792461.png",
                             "buttons": [
                                 {
                                     "type": "postback",
