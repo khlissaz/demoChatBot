@@ -1,6 +1,6 @@
 import request from "request";
 require("dotenv").config();
-import chaBotService from "../services/chatBotService";
+import chatBotService from "../services/chatBotService";
 
 const MY_VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -206,18 +206,18 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-      let username = chaBotService.getFacebookUsername (sender_psid);
+      let username = chatBotService.getFacebookUsername (sender_psid);
       user.name = username;
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
       break;
     case "Demander_service":
       //send service list to users
-      chaBotService.sendServiceList(sender_psid).then(function (res) { console.log(res) });
+      chatBotService.sendServiceList(sender_psid).then(function (res) { console.log(res) });
 
       break;
     case "DEPOSER_REPARATION":
-      chaBotService.deposerReperation(sender_psid);
+      chatBotService.deposerReperation(sender_psid);
       break;
     case "SMATPHONE":
       chaBotService.handleDeposRep(sender_psid);
