@@ -125,7 +125,7 @@ let deposerReperation = (sender_psid) => {
                         "elements": [{
                             "title": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
                             "subtitle": "Votre service est notre objectif",
-                            //"image_url": "https://www.trustit.tn/assets/img/logo.png",
+                            "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcStu0lMZR0ta-iUUvEh3atjFlQs_m8k1YriHg&usqp=CAU",
                             "buttons": [
                                 {
                                     "type": "postback",
