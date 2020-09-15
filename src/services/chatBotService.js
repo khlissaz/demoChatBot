@@ -134,12 +134,12 @@ let demanderReperation = (sender_psid) => {
                                 },
                                 {
                                     "type": "postback",
-                                    "title": "Reparation Ordinateur",
+                                    "title": "Réparation Ordinateur",
                                     "payload": "ORDINATEUR",
                                 },
                                 {
                                     "type": "postback",
-                                    "title": "Reparation Console",
+                                    "title": "Réparation Console",
                                     "payload": "CONSOLE",
                                 },
 
