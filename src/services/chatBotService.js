@@ -210,6 +210,38 @@ let sendMessageAskingPhoneNumber = (sender_id) => {
     });
 };
 
+let sendMessageAskingPanne = (sender_id) => {
+    let request_body = {
+        "recipient": {
+            "id": sender_id
+        },
+        "messaging_type": "RESPONSE",
+        "message": {
+            "text": "Merci de nous préciser la panne",
+            "quick_replies": [
+                {
+                    "content_type": "user_modele",
+                }
+            ]
+        }
+    };
+
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v6.0/me/messages",
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "method": "POST",
+        "json": request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    });
+};
+
+
 let sendMessageAskingModele = (sender_id) => {
     let request_body = {
         "recipient": {
@@ -240,6 +272,9 @@ let sendMessageAskingModele = (sender_id) => {
         }
     });
 };
+
+
+
 
 let goBackToServiceList = (sender_psid) => {
     sendServiceList(sender_psid);
@@ -324,7 +359,9 @@ let sendNotificationToTelegram = (user) => {
 | ------------------------------------------------|
 | 1. Username: <b>${user.name}</b>   |
 | 2. Phone number: <b>${user.phoneNumber}</b> |
-| 3. Created at: ${user.createdAt} |
+| 3. Phone number: <b>${user.modele}</b> |
+| 4. Phone number: <b>${user.panne}</b> |
+| 5. Created at: ${user.createdAt} |
 | ------------------------------------------------ |                           
       `
             };
@@ -355,6 +392,7 @@ module.exports = {
     demanderReperation:demanderReperation,
     sendMessageAskingPhoneNumber:sendMessageAskingPhoneNumber,
     sendMessageAskingModele:sendMessageAskingModele,
+    sendMessageAskingPanne:sendMessageAskingPanne,
     goBackToServiceList  :goBackToServiceList ,
     sendNotificationToTelegram:sendNotificationToTelegram,
     sendMessageDoneDeposerReperation:sendMessageDoneDeposerReperation
