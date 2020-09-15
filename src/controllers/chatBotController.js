@@ -141,9 +141,8 @@ let handleMessage = async (sender_psid, message) => {
   //checking quick reply
   if (user.modele != null) {
     await chatBotService.sendMessageAskingPanne(sender_psid);
-    user.panne=payload;
     // pay load is a phone number
-    if (user.modele != null && user.panne != null && user.phoneNumber == null) {
+    if (message.quick_reply.payload !== " ") {
       //done a reservation
       // npm install --save moment to use moment
       user.phoneNumber = message.quick_reply.payload;
