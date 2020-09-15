@@ -8,6 +8,8 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 let user = {
   name: "",
   phoneNumber: "",
+  modele: "",
+  panne: "",
   createdAt: ""
 };
 
@@ -137,7 +139,7 @@ function firstEntity(nlp, name) {
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
-  if (message && message.quick_reply && message.quick_reply.payload) {
+  if (user.modele != null) {
     await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
     // pay load is a phone number
     if (message.quick_reply.payload !== " ") {
@@ -215,6 +217,7 @@ let handlePostback = (sender_psid, received_postback) => {
       break;
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);
+      user.modele=payload;
       break;
     case "yes":
       response = { text: "Thank you!" };
