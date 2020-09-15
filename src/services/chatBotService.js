@@ -352,7 +352,7 @@ module.exports = {
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
     sendServiceList: sendServiceList,
     handleDeposRep:handleDeposRep,
-    deùanderReperation:demanderReperation,
+    demanderReperation:demanderReperation,
     sendMessageAskingPhoneNumber:sendMessageAskingPhoneNumber,
     sendMessageAskingModele:sendMessageAskingModele,
     goBackToServiceList  :goBackToServiceList ,
