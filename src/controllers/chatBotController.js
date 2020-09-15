@@ -140,7 +140,7 @@ function firstEntity(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
 if (user.modele != null) {
-    await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
+    await chatBotService.sendMessageAskingPanne(sender_psid);
     // pay load is a phone number
     if (message && message.quick_reply && message.quick_reply.payload) {
       //done a reyservation
