@@ -139,11 +139,11 @@ function firstEntity(nlp, name) {
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
-  if (user.modele != null) {
-    await chatBotService.sendMessageAskingPanne(sender_psid);
+if (user.modele != null) {
+    await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
     // pay load is a phone number
-    if (message.quick_reply.payload !== " ") {
-      //done a reservation
+    if (message && message.quick_reply && message.quick_reply.payload) {
+      //done a reyservation
       // npm install --save moment to use moment
       user.phoneNumber = message.quick_reply.payload;
       user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
