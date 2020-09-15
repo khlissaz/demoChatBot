@@ -210,8 +210,8 @@ let handlePostback = (sender_psid, received_postback) => {
       chatBotService.sendServiceList(sender_psid).then(function (res) { console.log(res) });
 
       break;
-    case "DEPOSER_REPARATION":
-      chatBotService.deposerReperation(sender_psid);
+    case "DEMANDER_REPARATION":
+      chatBotService.demanderReperation(sender_psid);
       break;
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);

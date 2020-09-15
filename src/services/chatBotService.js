@@ -82,8 +82,8 @@ let sendServiceList = (sender_psid) => {
                             "buttons": [
                                 {
                                     "type": "postback",
-                                    "title": "Deposer une réparation",
-                                    "payload": "DEPOSER_REPARATION",
+                                    "title": "Demander une réparation",
+                                    "payload": "DEMANDER_REPARATION",
                                 },
                                 {
                                     "type": "postback",
@@ -114,7 +114,7 @@ let sendServiceList = (sender_psid) => {
     });
 };
 
-let deposerReperation = (sender_psid) => {
+let demanderReperation = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
             let response = {
@@ -129,17 +129,17 @@ let deposerReperation = (sender_psid) => {
                             "buttons": [
                                 {
                                     "type": "postback",
-                                    "title": "Réparation d'un smartophone",
+                                    "title": "Réparation Smartophone",
                                     "payload": "SMARTPHONE",
                                 },
                                 {
                                     "type": "postback",
-                                    "title": "Reparation d'un pc",
+                                    "title": "Reparation Ordinateur",
                                     "payload": "ORDINATEUR",
                                 },
                                 {
                                     "type": "postback",
-                                    "title": "Reparation d'un console",
+                                    "title": "Reparation Console",
                                     "payload": "CONSOLE",
                                 },
 
@@ -352,7 +352,7 @@ module.exports = {
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
     sendServiceList: sendServiceList,
     handleDeposRep:handleDeposRep,
-    deposerReperation:deposerReperation,
+    deùanderReperation:demanderReperation,
     sendMessageAskingPhoneNumber:sendMessageAskingPhoneNumber,
     sendMessageAskingModele:sendMessageAskingModele,
     goBackToServiceList  :goBackToServiceList ,
