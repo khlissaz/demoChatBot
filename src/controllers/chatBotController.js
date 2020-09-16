@@ -144,6 +144,7 @@ let handleMessage = async (sender_psid, message) => {
     await chatBotService.sendMessageAskingPanne(sender_psid);
     console.log("2222222"+user.name);
     user.panne = message.text;
+    console.log("2222222"+user.panne);
   } else if (user.modele != null && user.panne != null && user.phoneNumber == null) {
     await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
     // npm install --save moment to use moment
