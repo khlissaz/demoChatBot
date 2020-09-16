@@ -211,33 +211,18 @@ let sendMessageAskingPhoneNumber = (sender_psid) => {
 };
 
 let sendMessageAskingPanne = (sender_psid) => {
-    let request_body = {
-        "recipient": {
-            "id": sender_psid
-        },
-        "messaging_type": "RESPONSE",
-        "message": {
-            "text": "Merci de nous preciser la panne!",
-            "quick_replies": [
-                {
-                    "content_type": "user_modele",
-                }
-            ]
-        }
-    };
-
-    // Send the HTTP request to the Messenger Platform
-    request({
-        "uri": "https://graph.facebook.com/v6.0/me/messages",
-        "qs": { "access_token": PAGE_ACCESS_TOKEN },
-        "method": "POST",
-        "json": request_body
-    }, (err, res, body) => {
-        if (!err) {
-            console.log(res+"---------"+body)
-            console.log('message sent!')
-        } else {
-            console.error("Unable to send message:" + err);
+    return new Promise(async(resolve,reject)=>{
+        try {
+            
+    //let username= await getFacebookUsername(sender_psid);
+    let response = {"text":"Veuillez maintenant nous préciser la panne."};
+      
+    
+            await sendMessage(sender_psid, response);
+            console.log('panne sent!')
+        } catch (error) {
+            console.log('panne no sent"Unable to send panne!')
+            reject(error)
         }
     });
 };
