@@ -179,10 +179,10 @@ let response = {"text":"Veuillez "+username+" nous informer le modele de votre t
 });
 }
 
-let sendMessageAskingPhoneNumber = (sender_id) => {
+let sendMessageAskingPhoneNumber = (sender_psid) => {
     let request_body = {
         "recipient": {
-            "id": sender_id
+            "id": sender_psid
         },
         "messaging_type": "RESPONSE",
         "message": {
@@ -210,11 +210,11 @@ let sendMessageAskingPhoneNumber = (sender_id) => {
     });
 };
 
-let sendMessageAskingPanne = (sender_id) => {
+let sendMessageAskingPanne = (sender_psid) => {
     return new Promise(async(resolve,reject)=>{
         try {
             
-    let username= await getFacebookUsername(sender_psid);
+    //let username= await getFacebookUsername(sender_psid);
     let response = {"text":"Veuillez maintenant nous préciser la panne."};
     
     
@@ -229,10 +229,10 @@ let sendMessageAskingPanne = (sender_id) => {
 };
 
 
-let sendMessageAskingModele = (sender_id) => {
+let sendMessageAskingModele = (sender_psid) => {
     let request_body = {
         "recipient": {
-            "id": sender_id
+            "id": sender_psid
         },
         "messaging_type": "RESPONSE",
         "message": {
