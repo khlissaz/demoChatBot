@@ -142,6 +142,7 @@ let handleMessage = async (sender_psid, message) => {
 if (user.modele != null) {
     await chatBotService.sendMessageAskingPanne(sender_psid);
     user.panne=message.payload
+    console.log("////////////"+user.panne);
     // pay load is a phone number
     if (user.modele != null && user.panne != null && user.phoneNumber == null) {
       //done a reyservation
@@ -219,6 +220,7 @@ let handlePostback = (sender_psid, received_postback) => {
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);
       user.modele=payload;
+      console.log("****"+user.modele)
       break;
     case "yes":
       response = { text: "Thank you!" };
