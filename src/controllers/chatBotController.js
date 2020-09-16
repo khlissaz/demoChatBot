@@ -140,6 +140,7 @@ function firstEntity(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
   if (user.modele != null ) {
+    console.log(user);
     console.log("111111"+user.panne+"1212121");
     await chatBotService.sendMessageAskingPanne(sender_psid);
     console.log("2222222"+message.text);

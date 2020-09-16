@@ -219,7 +219,7 @@ let sendMessageAskingPanne = (sender_psid) => {
       
     
             await sendMessage(sender_psid, response);
-            console.log('787878panne sent!'+resolve.toString)
+            console.log('787878panne sent!')
         } catch (error) {
             console.log('panne no sent"Unable to send panne!')
             reject(error)
