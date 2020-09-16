@@ -267,6 +267,7 @@ let sendMessageAskingModele = (sender_id) => {
         "json": request_body
     }, (err, res, body) => {
         if (!err) {
+            console.log(res+"---------"+body)
             console.log('message sent!')
         } else {
             console.error("Unable to send message:" + err);
