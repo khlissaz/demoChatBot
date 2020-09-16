@@ -80,7 +80,7 @@ let getWebhook = (req, res) => {
 };
 
 
-let handleMessageWithEntities = (message) => {
+/*let handleMessageWithEntities = (message) => {
   let entitiesArr = ["datetime", "phone_number"];
   let entityChosen = "";
   let data = {
@@ -135,52 +135,52 @@ let handleMessageWithEntities = (message) => {
 }
 function firstEntity(nlp, name) {
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
-}
+}*/
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
-if (user.modele != null && user.panne==null) {
+  if (user.modele != null && user.panne == null) {
+    console.log("111111"+user.name);
     await chatBotService.sendMessageAskingPanne(sender_psid);
-    user.panne=message.text;
-    // pay load is a phone number
-    if (user.modele != null && user.panne != null && user.phoneNumber == null) {
-      await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
-      // npm install --save moment to use moment
-      user.phoneNumber = message.quick_reply.payload;
-      user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-      //send a notification to Telegram Group chat by Telegram bot.
-      await chatBotService.sendNotificationToTelegram(user);
-
-      // send messages to the user
-      await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-    }
-    return;
-  }
-
-  //handle text message
-  let entity = handleMessageWithEntities(message);
-
-  if (entity.name === "datetime") {
-    //handle quick reply message: asking about the party size , how many people
-    user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
-
-    await chatBotService.sendMessageAskingModele(sender_psid);
-  } else if (entity.name === "phone_number") {
-    //handle quick reply message: done reserve table
-
-    user.phoneNumber = entity.value;
+    console.log("2222222"+user.name);
+    user.panne = message.text;
+  } else if (user.modele != null && user.panne != null && user.phoneNumber == null) {
+    await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
+    // npm install --save moment to use moment
+    user.phoneNumber = message.quick_reply.payload;
     user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
     //send a notification to Telegram Group chat by Telegram bot.
     await chatBotService.sendNotificationToTelegram(user);
 
     // send messages to the user
     await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-  } else {
-    //default reply
   }
+  return;
+}
+//handle text message
+/*let entity = handleMessageWithEntities(message);
+
+if (entity.name === "datetime") {
+  //handle quick reply message: asking about the party size , how many people
+  user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
+
+  await chatBotService.sendMessageAskingModele(sender_psid);
+} else if (entity.name === "phone_number") {
+  //handle quick reply message: done reserve table
+
+  user.phoneNumber = entity.value;
+  user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+  //send a notification to Telegram Group chat by Telegram bot.
+  await chatBotService.sendNotificationToTelegram(user);
+
+  // send messages to the user
+  await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+} else {
+  //default reply
+};*/
 
   //handle attachment message
-};
+
 
 
 // Handles messaging_postbacks events
@@ -218,8 +218,8 @@ let handlePostback = (sender_psid, received_postback) => {
       break;
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);
-      user.modele=payload;
-      console.log("****"+user.modele)
+      user.modele = payload;
+      console.log("****" + user.modele)
       break;
     case "yes":
       response = { text: "Thank you!" };
