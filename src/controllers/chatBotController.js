@@ -141,7 +141,7 @@ let handleMessage = async (sender_psid, message) => {
   //checking quick reply
 if (user.modele != null) {
     await chatBotService.sendMessageAskingPanne(sender_psid);
-    user.panne=message.quick_reply.payload
+    user.panne=message.payload
     // pay load is a phone number
     if (user.modele != null && user.panne != null && user.phoneNumber == null) {
       //done a reyservation
