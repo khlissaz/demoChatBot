@@ -220,7 +220,7 @@ let sendMessageAskingPanne = (sender_id) => {
             "text": "Merci de nous préciser la panne",
             "quick_replies": [
                 {
-                    "content_type": "user_modele",
+                    "content_type": "user_panne",
                 }
             ]
         }
@@ -234,6 +234,7 @@ let sendMessageAskingPanne = (sender_id) => {
         "json": request_body
     }, (err, res, body) => {
         if (!err) {
+            console.log(res+'+++++'+body)
             console.log('message sent!')
         } else {
             console.error("Unable to send message:" + err);
