@@ -143,7 +143,7 @@ if (user.modele != null) {
     await chatBotService.sendMessageAskingPanne(sender_psid);
     user.panne=message.quick_reply.payload
     // pay load is a phone number
-    if (user.modele != null && user.payload != null && user.phoneNumber == null) {
+    if (user.modele != null && user.panne != null && user.phoneNumber == null) {
       //done a reyservation
       // npm install --save moment to use moment
       user.phoneNumber = message.quick_reply.payload;
