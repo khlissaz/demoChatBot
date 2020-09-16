@@ -141,8 +141,8 @@ let handleMessage = async (sender_psid, message) => {
   //checking quick reply
 if (user.modele != null) {
     await chatBotService.sendMessageAskingPanne(sender_psid);
-  console.log("888888888"+message.quick_reply.payload)
-    user.panne=message.payload
+  console.log("888888888"+message.nlp+"7777"+message.value)
+    user.panne=message.nlp
     console.log("////////////"+user.panne);
     // pay load is a phone number
     if (user.modele != null && user.panne != null && user.phoneNumber == null) {
