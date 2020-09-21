@@ -226,8 +226,9 @@ let handlePostback = (sender_psid, received_postback) => {
       //get facebook username
       let username = getFacebookUsername(sender_psid);
       user.name = username;
+      console.log(username)
       //send welcome response to users
-      chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
+      chatBotService.sendResponseWelcomeNewCustomer(user.name, sender_psid);
       break;
     case "Demander_service":
       //send service list to users
