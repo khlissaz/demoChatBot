@@ -21,10 +21,11 @@ let getFacebookUsername = (sender_psid) => {
         });
     });
 };
-let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
+let sendResponseWelcomeNewCustomer = ( sender_psid) => {
     return new Promise(async (resolve, reject) => {
 
         try {
+            let username= await getFacebookUsername(sender_psid);
            // let response_first = { "text": "سلام " + username + "، كيفاه نجمو نعاونوك؟ /g Comment pouvons-nous vous aider exactement ? " };
             let response_second = {
                 "attachment": {
