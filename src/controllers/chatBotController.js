@@ -80,7 +80,7 @@ let getWebhook = (req, res) => {
   }
 };
 let getFacebookUsername = (sender_psid) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async(resolve, reject) => {
       // Send the HTTP request to the Messenger Platform
       let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
       request({
@@ -224,7 +224,7 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-      let username= await getFacebookUsername(sender_psid);
+      let username = await getFacebookUsername(sender_psid);
       user.name = username;
       console.log(username)
       //send welcome response to users
