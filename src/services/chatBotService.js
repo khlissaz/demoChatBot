@@ -32,7 +32,7 @@ let sendResponseWelcomeNewCustomer = (username, sender_psid) => {
                     "payload": {
                         "template_type": "generic",
                         "elements": [{
-                            "title": "سلام " +username.body + "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? ",
+                            "title": "سلام " +username+ "، كيفاه نجمو نعاونوك؟ \n Comment pouvons-nous vous aider exactement ? ",
                             "subtitle": "Trust-it est le 1er réseau des réparateurs de confiance en Tunisie",
                             "image_url": "https://statics.trustit.tn/categories/1589646792461.png",
                             "buttons": [
