@@ -140,14 +140,14 @@ function firstEntity(nlp, name) {
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
-  if (user.modele != null ) {
+  if (message.app_id==null && user.modele != null ) {
     //console.log(user+"/*/*/*");
    // console.log("111111"+user.panne+"1212121");
     await chatBotService.sendMessageAskingPanne(sender_psid);
     //console.log("2222222"+message.text);
     user.panne = message.text;
     console.log("333333"+user.panne);
-  } else if (user.modele != null && user.panne != null && user.phoneNumber == null) {
+  } else if (message.app_id==null && user.modele != null && user.panne != null && user.phoneNumber == null) {
     await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
     // npm install --save moment to use moment
     user.phoneNumber = message.quick_reply.payload;
@@ -206,7 +206,7 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-      let username = chatBotService.getFacebookUsername(sender_psid);
+      let username = getFacebookUsername(sender_psid);
       user.name = username;
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
