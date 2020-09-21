@@ -8,7 +8,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 let user = {
   name: "",
   phoneNumber: "",
-  type_appareil:"",
+  type_appareil: "",
   modele: "",
   panne: "",
   createdAt: ""
@@ -80,22 +80,22 @@ let getWebhook = (req, res) => {
   }
 };
 let getFacebookUsername = (sender_psid) => {
-  return new Promise(async(resolve, reject) => {
-      // Send the HTTP request to the Messenger Platform
-      let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
-      request({
-          "uri": uri,
-          "method": "GET",
-      }, (err, res, body) => {
-          if (!err) {
-              //convert string to json object
-              body = JSON.parse(body);
-              let username = `${body.last_name} ${body.first_name}`;
-              resolve(username);
-          } else {
-              reject("Unable to send message:" + err);
-          }
-      });
+  return new Promise(async (resolve, reject) => {
+    // Send the HTTP request to the Messenger Platform
+    let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
+    request({
+      "uri": uri,
+      "method": "GET",
+    }, (err, res, body) => {
+      if (!err) {
+        //convert string to json object
+        body = JSON.parse(body);
+        let username = `${body.last_name} ${body.first_name}`;
+        resolve(username);
+      } else {
+        reject("Unable to send message:" + err);
+      }
+    });
   });
 };
 
@@ -158,23 +158,27 @@ function firstEntity(nlp, name) {
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
-  if (message.app_id==null && user.modele != null && user.panne == null ) {
-    //console.log(user+"/*/*/*");
-    console.log("111111"+user.panne+"1212121");
-    await chatBotService.sendMessageAskingPanne(sender_psid);
-    console.log("2222222"+message.text);
-    user.panne = message.text;
-    console.log("333333"+user.panne);
-  } else if (message.app_id==null && user.modele != null && user.panne != null ) {
-    await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
-    // npm install --save moment to use moment
-    user.phoneNumber = message.quick_reply.payload;
-    user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-    //send a notification to Telegram Group chat by Telegram bot.
-   // await chatBotService.sendNotificationToTelegram(user);
+  if (message) {
+    if (message.app_id == null && user.modele != null) {
+      //console.log(user+"/*/*/*");
+      console.log("111111" + user.panne + "1212121");
+      await chatBotService.sendMessageAskingPanne(sender_psid);
+      console.log("2222222" + message.text);
+      user.panne = message.text;
+      console.log("333333" + user.panne);
+      
+    } else if (message.app_id == null && user.modele != null && user.panne != null) {
 
-    // send messages to the user
-    await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+      await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
+      // npm install --save moment to use moment
+      user.phoneNumber = message.text;
+      user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+      //send a notification to Telegram Group chat by Telegram bot.
+      // await chatBotService.sendNotificationToTelegram(user);
+
+      // send messages to the user
+      await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+    }
   }
   return;
 }
@@ -200,7 +204,7 @@ if (entity.name === "datetime") {
   //default reply
 };*/
 
-  //handle attachment message
+//handle attachment message
 
 
 
@@ -224,12 +228,12 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-    //  let username = getFacebookUsername(sender_psid);
-     // user.name = username.JSON.forEach;
+      //  let username = getFacebookUsername(sender_psid);
+      // user.name = username.JSON.forEach;
       //console.log(username)
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(sender_psid);
-      
+
       break;
     case "Demander_service":
       //send service list to users
@@ -238,7 +242,7 @@ let handlePostback = (sender_psid, received_postback) => {
       break;
     case "DEMANDER_REPARATION":
       chatBotService.demanderReperation(sender_psid);
-      user.type_appareil=payload;
+      user.type_appareil = payload;
       break;
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);
