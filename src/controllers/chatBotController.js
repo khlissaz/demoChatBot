@@ -224,7 +224,7 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-      let username = await getFacebookUsername(sender_psid);
+      let username = getFacebookUsername(sender_psid);
       user.name = username;
       console.log(username)
       //send welcome response to users
