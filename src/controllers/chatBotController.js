@@ -140,11 +140,11 @@ function firstEntity(nlp, name) {
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
-  if (user.modele != null && user.panne =="") {
-    console.log(user+"/*/*/*");
-    console.log("111111"+user.panne+"1212121");
+  if (user.modele != null ) {
+    //console.log(user+"/*/*/*");
+   // console.log("111111"+user.panne+"1212121");
     await chatBotService.sendMessageAskingPanne(sender_psid);
-    console.log("2222222"+message.text);
+    //console.log("2222222"+message.text);
     user.panne = message.text;
     console.log("333333"+user.panne);
   } else if (user.modele != null && user.panne != null && user.phoneNumber == null) {
