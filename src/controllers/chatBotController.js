@@ -8,6 +8,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 let user = {
   name: "",
   phoneNumber: "",
+  type_appareil:"",
   modele: "",
   panne: "",
   createdAt: ""
@@ -152,7 +153,7 @@ let handleMessage = async (sender_psid, message) => {
     user.phoneNumber = message.quick_reply.payload;
     user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
     //send a notification to Telegram Group chat by Telegram bot.
-    await chatBotService.sendNotificationToTelegram(user);
+   // await chatBotService.sendNotificationToTelegram(user);
 
     // send messages to the user
     await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
@@ -208,7 +209,7 @@ let handlePostback = (sender_psid, received_postback) => {
       let username = chatBotService.getFacebookUsername(sender_psid);
       user.name = username;
       //send welcome response to users
-      chatBotService.sendResponseWelcomeNewCustomer(user.name, sender_psid);
+      chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
       break;
     case "Demander_service":
       //send service list to users
@@ -217,6 +218,7 @@ let handlePostback = (sender_psid, received_postback) => {
       break;
     case "DEMANDER_REPARATION":
       chatBotService.demanderReperation(sender_psid);
+      user.type_appareil=payload;
       break;
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);

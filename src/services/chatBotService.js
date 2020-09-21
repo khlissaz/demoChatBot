@@ -186,7 +186,7 @@ let sendMessageAskingPhoneNumber = (sender_psid) => {
         },
         "messaging_type": "RESPONSE",
         "message": {
-            "text": "Thank you. And what's the best phone number for us to reach you at?",
+            "text": "Merci de nous envoyer votre numéro contact pour qu'on puisse vous rejoindre.",
             "quick_replies": [
                 {
                     "content_type": "user_phone_number",
@@ -297,7 +297,7 @@ let  sendMessageDoneDeposerReperation= async  (sender_id) => {
             "attachment": {
                 "type": "image",
                 "payload": {
-                    "url": "https://bit.ly/giftDonalTrump"
+                    "url": "https://media.giphy.com/media/daxhIRBXW3WMoNaqGo/giphy.gif"
                 }
             }
         };
