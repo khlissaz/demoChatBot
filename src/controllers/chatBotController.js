@@ -158,7 +158,7 @@ function firstEntity(nlp, name) {
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
-  if (message.app_id==null && user.modele != null && user.panne == null ) {
+  if (message.app_id==null && user.modele != null  ) {
     //console.log(user+"/*/*/*");
    // console.log("111111"+user.panne+"1212121");
     await chatBotService.sendMessageAskingPanne(sender_psid);
@@ -225,10 +225,10 @@ let handlePostback = (sender_psid, received_postback) => {
     case "GET_STARTED":
       //get facebook username
       let username = getFacebookUsername(sender_psid);
-      user.name = username;
+     // user.name = username.JSON.forEach;
       console.log(username)
       //send welcome response to users
-      chatBotService.sendResponseWelcomeNewCustomer(user.name, sender_psid);
+      chatBotService.sendResponseWelcomeNewCustomer(username, sender_psid);
       break;
     case "Demander_service":
       //send service list to users
