@@ -40,6 +40,7 @@ let postWebhook = (req, res) => {
         handlePostback(sender_psid, webhook_event.postback);
       }
 
+
     });
 
     // Return a '200 OK' response to all events
@@ -56,7 +57,7 @@ let postWebhook = (req, res) => {
 let getWebhook = (req, res) => {
   // Your verify token. Should be a random string.
   let VERIFY_TOKEN = MY_VERIFY_TOKEN;
-console.log(VERIFY_TOKEN+"getwebhoook")
+
   // Parse the query params
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
@@ -137,7 +138,7 @@ let handleMessageWithEntities = (message) => {
 
   };
   entitiesArr.forEach((name) => {
-    let entity = firstTrait(message.nlp, name);
+    let entity = firstEntity(message.nlp, name);
     if (entity && entity.confidence > 0.8) {
 
       entityChosen = name;
@@ -151,23 +152,21 @@ let handleMessageWithEntities = (message) => {
   console.log("------------");
   return data;
 }
-
-function firstTrait(nlp, name) {
+function firstEntity(nlp, name) {
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
-
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
   if (message) {
     if (message.app_id == null && user.modele != null) {
       //console.log(user+"/*/*/*");
-      console.log("111111" + user.PAGE_ACCESS_TOKEN + "1212121");
+      console.log("111111" + user.panne + "1212121");
       await chatBotService.sendMessageAskingPanne(sender_psid);
       console.log("2222222" + message.text);
       user.panne = message.text;
       console.log("333333" + user.panne);
-
+      
     } else if (message.app_id == null && user.modele != null && user.panne != null) {
 
       await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
@@ -181,30 +180,30 @@ let handleMessage = async (sender_psid, message) => {
       await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
     }
   }
- 
-
-  //handle text message
-  let entity = handleMessageWithEntities(message);
-
-  if (entity.name === "datetime") {
-    //handle quick reply message: asking about the party size , how many people
-    user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
-
-    chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-  } else if (entity.name === "phone_number") {
-    //handle quick reply message: done reserve table
-
-    user.phoneNumber = entity.value;
-    user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-    //send a notification to Telegram Group chat by Telegram bot.
-    chatBotService.sendNotificationToTelegram(user);
-
-    // send messages to the user
-    chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-  } else {
-    //default reply
-  };
+  return;
 }
+//handle text message
+/*let entity = handleMessageWithEntities(message);
+
+if (entity.name === "datetime") {
+  //handle quick reply message: asking about the party size , how many people
+  user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
+
+  await chatBotService.sendMessageAskingModele(sender_psid);
+} else if (entity.name === "phone_number") {
+  //handle quick reply message: done reserve table
+
+  user.phoneNumber = entity.value;
+  user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+  //send a notification to Telegram Group chat by Telegram bot.
+  await chatBotService.sendNotificationToTelegram(user);
+
+  // send messages to the user
+  await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+} else {
+  //default reply
+};*/
+
 //handle attachment message
 
 
@@ -229,9 +228,9 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-      let username = getFacebookUsername(sender_psid);
+      //  let username = getFacebookUsername(sender_psid);
       // user.name = username.JSON.forEach;
-      console.log(username)
+      //console.log(username)
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(sender_psid);
 
