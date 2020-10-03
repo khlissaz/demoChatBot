@@ -13,7 +13,7 @@ let user = {
   panne: "",
   createdAt: ""
 };
-
+let username= await getFacebookUsername(sender_psid);
 let postWebhook = (req, res) => {
 
   // Parse the request body from the POST
@@ -124,8 +124,10 @@ let handleMessage = async (sender_psid, message) => {
   let entity = handleMessageWithEntities(message);
   console.log(entity)
   if (message) {
+
     if (ok) {
-      if (message.app_id == null && user.modele == "") {
+      console.log(username)
+      if (message.text=="Veuillez "+username+" nous informer le modele de votre terminal.") {
         user.modele = message.text;
         await chatBotService.sendMessageAskingPanne(sender_psid);
         user.panne = "";
