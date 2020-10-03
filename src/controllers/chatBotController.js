@@ -120,6 +120,7 @@ function firstEntity(nlp, name) {
 }
 //handle text message
 let handleMessage = async (sender_psid, message) => {
+  try { 
   let entity = handleMessageWithEntities(message);
   console.log(entity)
   if (message) {
@@ -141,28 +142,28 @@ let handleMessage = async (sender_psid, message) => {
         user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
         //send a notification to Telegram Group chat by Telegram bot.
         await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-        console.log(user.JSON +"9999999")
+        console.log(user.JSON + "9999999")
         return;
       }
-    } else if(message.app_id == null  && !ok) {
-     // await chatBotService.sendNotificationToTelegram(user);
+    } else if (message.app_id == null && !ok) {
+      // await chatBotService.sendNotificationToTelegram(user);
       await chatBotService.sendMessageDoneAvis;
     };
   };
 
   //handle text message
- 
- /* if (entity.name === "phone_number") {
-    //handle quick reply message: asking about the party size , how many people
-    user.phoneNumber = entity.value;
-    // console.log(user.time)
-    await chatBotService.sendMessageAskingLocation(sender_psid);
-  } if (entity.name === "location") {
-    //handle quick reply message: done reserve table
-    user.adresse = entity.value;
-    user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-    //send a notification to Telegram Group chat by Telegram bot.
-  }*/
+
+  /* if (entity.name === "phone_number") {
+     //handle quick reply message: asking about the party size , how many people
+     user.phoneNumber = entity.value;
+     // console.log(user.time)
+     await chatBotService.sendMessageAskingLocation(sender_psid);
+   } if (entity.name === "location") {
+     //handle quick reply message: done reserve table
+     user.adresse = entity.value;
+     user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+     //send a notification to Telegram Group chat by Telegram bot.
+   }*/
   // send messages to the user
   // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
   if (entity.name === "wit$greetings") {
@@ -177,6 +178,12 @@ let handleMessage = async (sender_psid, message) => {
     //send bye message
     callSendAPI(sender_psid, 'bye-bye!');
   }
+}
+  catch (e) {
+    reject(e);
+  }
+
+
 };
 
 // Handles messaging_postbacks events
