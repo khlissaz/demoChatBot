@@ -337,7 +337,7 @@ let  sendMessageDoneDeposerReperation= async  (sender_id) => {
 };
 
 let sendNotificationToTelegram = (user) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         try {
             let request_body = {
                 chat_id: process.env.TELEGRAM_GROUP_ID,

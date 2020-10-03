@@ -12,6 +12,7 @@ let getFacebookUserProfile = (req, res) => {
 let setUpUserFacebookProfile = async (req, res) => {
   //Send th HTTP request to the messenger Platform
   try {
+    console.log(PAGE_ACCESS_TOKEN)
     await homepageService.setUpMessengerPlatform(PAGE_ACCESS_TOKEN);
     return res.status(200).json({
 
@@ -20,7 +21,7 @@ let setUpUserFacebookProfile = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
 
-      message: "Erreur from node server"
+      message: "Erreur from node server"+PAGE_ACCESS_TOKEN
     });
   }
 

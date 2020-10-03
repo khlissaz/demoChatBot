@@ -159,7 +159,7 @@ function firstEntity(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
   if (message) {
-    if ( user.modele != null) {
+    if (message.app_id == null && user.modele != null) {
       //console.log(user+"/*/*/*");
       console.log("111111" + user.panne + "1212121");
       await chatBotService.sendMessageAskingPanne(sender_psid);
@@ -167,7 +167,7 @@ let handleMessage = async (sender_psid, message) => {
       user.panne = message.text;
       console.log("333333" + user.panne);
       
-    } else if (user.modele != null && user.panne != null) {
+    } else if (message.app_id == null && user.modele != null && user.panne != null) {
 
       await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
       // npm install --save moment to use moment
@@ -181,30 +181,29 @@ let handleMessage = async (sender_psid, message) => {
     }
   }
   return;
-}
+
 //handle text message
-/*
 let entity = handleMessageWithEntities(message);
 
 if (entity.name === "datetime") {
   //handle quick reply message: asking about the party size , how many people
   user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
 
-  await chatBotService.sendMessageAskingModele(sender_psid);
+   chatBotService.sendMessageDoneDeposerReperation(sender_psid);
 } else if (entity.name === "phone_number") {
   //handle quick reply message: done reserve table
 
   user.phoneNumber = entity.value;
   user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
   //send a notification to Telegram Group chat by Telegram bot.
-  await chatBotService.sendNotificationToTelegram(user);
+   chatBotService.sendNotificationToTelegram(user);
 
   // send messages to the user
-  await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+   chatBotService.sendMessageDoneDeposerReperation(sender_psid);
 } else {
   //default reply
-};*/
-
+};
+}
 //handle attachment message
 
 
