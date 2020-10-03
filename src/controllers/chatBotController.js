@@ -13,7 +13,7 @@ let user = {
   panne: "",
   createdAt: ""
 };
-let username= await getFacebookUsername(sender_psid);
+let username =  getFacebookUsername(sender_psid);
 let postWebhook = (req, res) => {
 
   // Parse the request body from the POST
@@ -80,7 +80,7 @@ let getWebhook = (req, res) => {
   }
 };
 let getFacebookUsername = async (sender_psid) => {
-  return new Promise(a (resolve, reject) => {
+  return new Promise( (resolve, reject) => {
     // Send the HTTP request to the Messenger Platform
     let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
     request({
