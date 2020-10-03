@@ -183,6 +183,7 @@ let handleMessage = async (sender_psid, message) => {
   return;
 }
 //handle text message
+/*
 let entity = handleMessageWithEntities(message);
 
 if (entity.name === "datetime") {
@@ -202,7 +203,7 @@ if (entity.name === "datetime") {
   await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
 } else {
   //default reply
-};
+};*/
 
 //handle attachment message
 
@@ -228,9 +229,9 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-      //  let username = getFacebookUsername(sender_psid);
+        let username = getFacebookUsername(sender_psid);
       // user.name = username.JSON.forEach;
-      //console.log(username)
+      console.log(username)
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(sender_psid);
 
