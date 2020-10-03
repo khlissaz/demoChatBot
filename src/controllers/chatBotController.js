@@ -100,43 +100,9 @@ let getFacebookUsername = (sender_psid) => {
 };
 
 let handleMessageWithEntities = (message) => {
-  let entitiesArr = ["datetime", "phone_number"];
+  let entitiesArr = ["wit$greetings", "wit$thanks", "wit$bye", "phone_number", "location"];
   let entityChosen = "";
-  let data = {
-    "get_started": {
-      "payload": "GET_STARTED"
-    },
-    "persistent_menu": [
-      {
-        "locale": "default",
-        "composer_input_disabled": false,
-        "call_to_actions": [
-          {
-            "type": "postback",
-            "title": "Talk to an agent",
-            "payload": "CARE_HELP"
-          },
-          {
-            "type": "postback",
-            "title": "Outfit suggestions",
-            "payload": "CURATION"
-          },
-          {
-            "type": "web_url",
-            "title": "Shop now",
-            "url": "https://www.originalcoastclothing.com/",
-            "webview_height_ratio": "full"
-          }
-        ]
-      }
-    ],
-
-    "whitelisted_domains": [
-      "https://trustit.herokuapp.com/",
-
-    ]
-
-  };
+  let data = {};
   entitiesArr.forEach((name) => {
     let entity = firstEntity(message.nlp, name);
     if (entity && entity.confidence > 0.8) {
@@ -147,66 +113,69 @@ let handleMessageWithEntities = (message) => {
     }
   });
   data.name = entityChosen;
-  console.log("------------");
-  console.log(data);
-  console.log("------------");
   return data;
 }
 function firstEntity(nlp, name) {
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
-// Handles messages events
-let handleMessage = async (sender_psid, message) => {
-  //checking quick reply
-  if (message) {
-    if (message.app_id == null && user.modele != null) {
-      //console.log(user+"/*/*/*");
-      console.log("111111" + user.panne + "1212121");
-      await chatBotService.sendMessageAskingPanne(sender_psid);
-      console.log("2222222" + message.text);
-      user.panne = message.text;
-      console.log("333333" + user.panne);
-      
-    } else if (message.app_id == null && user.modele != null && user.panne != null) {
-
-      await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
-      // npm install --save moment to use moment
-      user.phoneNumber = message.text;
-      user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-      //send a notification to Telegram Group chat by Telegram bot.
-      // await chatBotService.sendNotificationToTelegram(user);
-
-      // send messages to the user
-      await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-    }
-  }
-  return;
-}
 //handle text message
-/*let entity = handleMessageWithEntities(message);
+let handleMessage = async (sender_psid, message) => {
+  if (message) {
+    if (ok) {
+      if (message.app_id == null && user.modele == "") {
+        user.modele = message.text;
+        await chatBotService.sendMessageAskingPanne(sender_psid);
+        user.panne = "";
+        return;
+      } if (message.app_id == null && user.modele !== "" && user.panne == "") {
+        user.panne = message.text;
+        await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
+        user.phoneNumber = "";
+        return;
+      } if (message.app_id == null && user.modele != "" && user.panne != "" && user.phoneNumber == "") {
+        //done a reservation
+        // npm install --save moment to use moment
+        user.phoneNumber = message.text;
+        user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+        //send a notification to Telegram Group chat by Telegram bot.
+        await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+        console.log(user.JSON +"9999999")
+        return;
+      }
+    } else if(message.app_id == null  && !ok) {
+     // await chatBotService.sendNotificationToTelegram(user);
+      await chatBotService.sendMessageDoneAvis;
+    };
+  };
 
-if (entity.name === "datetime") {
-  //handle quick reply message: asking about the party size , how many people
-  user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
-
-  await chatBotService.sendMessageAskingModele(sender_psid);
-} else if (entity.name === "phone_number") {
-  //handle quick reply message: done reserve table
-
-  user.phoneNumber = entity.value;
-  user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-  //send a notification to Telegram Group chat by Telegram bot.
-  await chatBotService.sendNotificationToTelegram(user);
-
+  //handle text message
+  let entity = handleMessageWithEntities(message);
+  if (entity.name === "phone_number") {
+    //handle quick reply message: asking about the party size , how many people
+    user.phoneNumber = entity.value;
+    // console.log(user.time)
+    await chatBotService.sendMessageAskingLocation(sender_psid);
+  } if (entity.name === "location") {
+    //handle quick reply message: done reserve table
+    user.adresse = entity.value;
+    user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+    //send a notification to Telegram Group chat by Telegram bot.
+  }
   // send messages to the user
-  await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-} else {
-  //default reply
-};*/
-
-//handle attachment message
-
-
+  // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+  if (entity.name === "wit$greetings") {
+    //send greetings message
+    callSendAPI(sender_psid, "Bonjour , Trust-it a votre service.");
+  }
+  if (entity.name === "wit$thanks") {
+    //send thanks message
+    callSendAPI(sender_psid, `Merci a Vous!`);
+  }
+  if (entity.name === "wit$bye") {
+    //send bye message
+    callSendAPI(sender_psid, 'bye-bye!');
+  }
+};
 
 // Handles messaging_postbacks events
 let handlePostback = (sender_psid, received_postback) => {
