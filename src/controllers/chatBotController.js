@@ -122,7 +122,7 @@ function firstEntity(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   
   let entity = handleMessageWithEntities(message);
-  let username =  getFacebookUsername(sender_psid);
+  let username =  getFacebookUsername(sender_psid).text;
   console.log(entity+"*******")
   console.log(username+"#####")
   if (message) {
