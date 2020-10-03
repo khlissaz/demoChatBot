@@ -120,15 +120,16 @@ function firstEntity(nlp, name) {
 }
 //handle text message
 let handleMessage = async (sender_psid, message) => {
-  try { 
+  
   let entity = handleMessageWithEntities(message);
   let username =  getFacebookUsername(sender_psid);
   console.log(entity)
+  console.log(username)
   if (message) {
 
     if (ok) {
-      console.log(username)
-      if (message.text=="Veuillez "+username+" nous informer le modele de votre terminal.") {
+     
+      if (message.text == "Veuillez "+username+" nous informer le modele de votre terminal.") {
         user.modele = message.text;
         await chatBotService.sendMessageAskingPanne(sender_psid);
         user.panne = "";
@@ -180,10 +181,6 @@ let handleMessage = async (sender_psid, message) => {
   if (entity.name === "wit$bye") {
     //send bye message
     callSendAPI(sender_psid, 'bye-bye!');
-  }
-}
-  catch (e) {
-    reject(e);
   }
 
 
