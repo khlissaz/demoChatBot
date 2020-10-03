@@ -123,11 +123,11 @@ let handleMessage = async (sender_psid, message) => {
   
   let entity = handleMessageWithEntities(message);
   let username =  getFacebookUsername(sender_psid);
-  console.log(entity)
-  console.log(username)
+  console.log(entity+"*******")
+  console.log(username+"#####")
   if (message) {
 
-    if (ok) {
+  
      
       if (message.text == "Veuillez "+username+" nous informer le modele de votre terminal.") {
         user.modele = message.text;
@@ -153,7 +153,7 @@ let handleMessage = async (sender_psid, message) => {
       // await chatBotService.sendNotificationToTelegram(user);
       await chatBotService.sendMessageDoneAvis;
     };
-  };
+  
 
   //handle text message
 
