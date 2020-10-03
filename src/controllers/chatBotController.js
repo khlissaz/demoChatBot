@@ -128,7 +128,7 @@ let handleMessage = async (sender_psid, message) => {
   if (message) {  
     if(ok) {
     console.log(message.text+"+++++")  
-      if (message.text == "Veuillez "+username+" nous informer le modele de votre terminal.") {
+      if (message.app_id == null && user.modele == "") {
         user.modele = message.text;
         await chatBotService.sendMessageAskingPanne(sender_psid);
         user.panne = "";
