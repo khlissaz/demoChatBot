@@ -138,7 +138,7 @@ let handleMessageWithEntities = (message) => {
 
   };
   entitiesArr.forEach((name) => {
-    let entity = firstEntity(message.nlp, name);
+    let entity = firstTrait(message.nlp, name);
     if (entity && entity.confidence > 0.8) {
 
       entityChosen = name;
@@ -152,7 +152,7 @@ let handleMessageWithEntities = (message) => {
   console.log("------------");
   return data;
 }
-function firstEntity(nlp, name) {
+function firstTrait(nlp, name) {
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
 // Handles messages events
@@ -166,7 +166,7 @@ let handleMessage = async (sender_psid, message) => {
       console.log("2222222" + message.text);
       user.panne = message.text;
       console.log("333333" + user.panne);
-      
+
     } else if (message.app_id == null && user.modele != null && user.panne != null) {
 
       await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
@@ -180,29 +180,29 @@ let handleMessage = async (sender_psid, message) => {
       await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
     }
   }
-  return;
+ 
 
-//handle text message
-let entity = handleMessageWithEntities(message);
+  //handle text message
+  let entity = handleMessageWithEntities(message);
 
-if (entity.name === "datetime") {
-  //handle quick reply message: asking about the party size , how many people
-  user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
+  if (entity.name === "datetime") {
+    //handle quick reply message: asking about the party size , how many people
+    user.time = moment(entity.value).zone("+07:00").format('MM/DD/YYYY h:mm A');
 
-   chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-} else if (entity.name === "phone_number") {
-  //handle quick reply message: done reserve table
+    chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+  } else if (entity.name === "phone_number") {
+    //handle quick reply message: done reserve table
 
-  user.phoneNumber = entity.value;
-  user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-  //send a notification to Telegram Group chat by Telegram bot.
-   chatBotService.sendNotificationToTelegram(user);
+    user.phoneNumber = entity.value;
+    user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+    //send a notification to Telegram Group chat by Telegram bot.
+    chatBotService.sendNotificationToTelegram(user);
 
-  // send messages to the user
-   chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-} else {
-  //default reply
-};
+    // send messages to the user
+    chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+  } else {
+    //default reply
+  };
 }
 //handle attachment message
 
@@ -228,7 +228,7 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-        let username = getFacebookUsername(sender_psid);
+      let username = getFacebookUsername(sender_psid);
       // user.name = username.JSON.forEach;
       console.log(username)
       //send welcome response to users
