@@ -13,7 +13,7 @@ let user = {
   panne: "",
   createdAt: ""
 };
-let ok=false;
+let ok = false;
 
 let postWebhook = (req, res) => {
 
@@ -82,21 +82,21 @@ let getWebhook = (req, res) => {
 };
 let getFacebookUsername = (sender_psid) => {
   return new Promise((resolve, reject) => {
-      // Send the HTTP request to the Messenger Platform
-      let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
-      request({
-          "uri": uri,
-          "method": "GET",
-      }, (err, res, body) => {
-          if (!err) {
-              //convert string to json object
-              body = JSON.parse(body);
-              let username = `${body.last_name} ${body.first_name}`;
-              resolve(username);
-          } else {
-              reject("Unable to send message:" + err);
-          }
-      });
+    // Send the HTTP request to the Messenger Platform
+    let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
+    request({
+      "uri": uri,
+      "method": "GET",
+    }, (err, res, body) => {
+      if (!err) {
+        //convert string to json object
+        body = JSON.parse(body);
+        let username = `${body.last_name} ${body.first_name}`;
+        resolve(username);
+      } else {
+        reject("Unable to send message:" + err);
+      }
+    });
   });
 };
 let handleMessageWithEntities = (message) => {
@@ -120,14 +120,14 @@ function firstEntity(nlp, name) {
 }
 //handle text message
 let handleMessage = async (sender_psid, message) => {
-  
+
   let entity = handleMessageWithEntities(message);
-  let username= await getFacebookUsername(sender_psid);
-  console.log(entity.nlp+"*******")
-  console.log(username+"#####")
-  if (message) {  
-    if(ok) {
-    console.log(message.text+"+++++")  
+  let username = await getFacebookUsername(sender_psid);
+  console.log(entity.nlp + "*******")
+  console.log(username + "#####")
+  if (message) {
+    if (ok) {
+      console.log(message.text + "+++++")
       if (message.app_id == null && user.modele == "") {
         user.modele = message.text;
         await chatBotService.sendMessageAskingPanne(sender_psid);
@@ -152,6 +152,7 @@ let handleMessage = async (sender_psid, message) => {
       // await chatBotService.sendNotificationToTelegram(user);
       await chatBotService.sendMessageDoneAvis;
     };
+    return;
   };
 
   //handle text message
@@ -169,6 +170,7 @@ let handleMessage = async (sender_psid, message) => {
    }*/
   // send messages to the user
   // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+ 
   if (entity.name === "wit$greetings") {
     //send greetings message
     callSendAPI(sender_psid, "Bonjour , Trust-it a votre service.");
@@ -223,7 +225,7 @@ let handlePostback = (sender_psid, received_postback) => {
       break;
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);
-      ok=true;
+      ok = true;
       user.modele = payload;
       console.log("****" + user.modele)
       break;
