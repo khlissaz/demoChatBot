@@ -40,7 +40,6 @@ let postWebhook = (req, res) => {
         handlePostback(sender_psid, webhook_event.postback);
       }
 
-
     });
 
     // Return a '200 OK' response to all events
@@ -57,7 +56,7 @@ let postWebhook = (req, res) => {
 let getWebhook = (req, res) => {
   // Your verify token. Should be a random string.
   let VERIFY_TOKEN = MY_VERIFY_TOKEN;
-
+console.log(VERIFY_TOKEN+"getwebhoook")
   // Parse the query params
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];

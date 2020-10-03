@@ -4,7 +4,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 let setUpMessengerPlatform = ( PAGE_ACCESS_TOKEN) => {
     return new Promise((resolve, reject) => {
         try {
-
+console.log("okkkkkkkkkkkkkk")
             let data = {
                 "get_started": {
                     "payload": "GET_STARTED"
