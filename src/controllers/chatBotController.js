@@ -79,26 +79,25 @@ let getWebhook = (req, res) => {
     }
   }
 };
-let getFacebookUsername = async (sender_psid) => {
-  return new Promise( (resolve, reject) => {
-    // Send the HTTP request to the Messenger Platform
-    let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
-    request({
-      "uri": uri,
-      "method": "GET",
-    }, (err, res, body) => {
-      if (!err) {
-        //convert string to json object
-        body = JSON.parse(body);
-        let username = `${body.last_name} ${body.first_name}`;
-        resolve(username);
-      } else {
-        reject("Unable to send message:" + err);
-      }
-    });
+let getFacebookUsername = (sender_psid) => {
+  return new Promise((resolve, reject) => {
+      // Send the HTTP request to the Messenger Platform
+      let uri = `https://graph.facebook.com/${sender_psid}?fields=first_name,last_name,profile_pic&access_token=${PAGE_ACCESS_TOKEN}`;
+      request({
+          "uri": uri,
+          "method": "GET",
+      }, (err, res, body) => {
+          if (!err) {
+              //convert string to json object
+              body = JSON.parse(body);
+              let username = `${body.last_name} ${body.first_name}`;
+              resolve(username);
+          } else {
+              reject("Unable to send message:" + err);
+          }
+      });
   });
 };
-
 let handleMessageWithEntities = (message) => {
   let entitiesArr = ["wit$greetings", "wit$thanks", "wit$bye", "phone_number", "location"];
   let entityChosen = "";
@@ -122,7 +121,7 @@ function firstEntity(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   
   let entity = handleMessageWithEntities(message);
-  let username =  getFacebookUsername(sender_psid).text;
+  let username= await getFacebookUsername(sender_psid);
   console.log(entity+"*******")
   console.log(username+"#####")
   if (message) {
