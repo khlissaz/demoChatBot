@@ -124,10 +124,8 @@ let handleMessage = async (sender_psid, message) => {
   let username= await getFacebookUsername(sender_psid);
   console.log(entity+"*******")
   console.log(username+"#####")
-  if (message) {
-
-  
-     
+  if (message) {   
+    console.log(message.text+"+++++")  
       if (message.text == "Veuillez "+username+" nous informer le modele de votre terminal.") {
         user.modele = message.text;
         await chatBotService.sendMessageAskingPanne(sender_psid);
