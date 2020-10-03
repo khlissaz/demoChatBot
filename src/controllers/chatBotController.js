@@ -120,6 +120,8 @@ function firstEntity(nlp, name) {
 }
 //handle text message
 let handleMessage = async (sender_psid, message) => {
+  let entity = handleMessageWithEntities(message);
+  console.log(entity)
   if (message) {
     if (ok) {
       if (message.app_id == null && user.modele == "") {
@@ -149,8 +151,8 @@ let handleMessage = async (sender_psid, message) => {
   };
 
   //handle text message
-  let entity = handleMessageWithEntities(message);
-  if (entity.name === "phone_number") {
+ 
+ /* if (entity.name === "phone_number") {
     //handle quick reply message: asking about the party size , how many people
     user.phoneNumber = entity.value;
     // console.log(user.time)
@@ -160,7 +162,7 @@ let handleMessage = async (sender_psid, message) => {
     user.adresse = entity.value;
     user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
     //send a notification to Telegram Group chat by Telegram bot.
-  }
+  }*/
   // send messages to the user
   // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
   if (entity.name === "wit$greetings") {
