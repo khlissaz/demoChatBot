@@ -99,7 +99,7 @@ let getFacebookUsername = (sender_psid) => {
   });
 };
 
-/*let handleMessageWithEntities = (message) => {
+let handleMessageWithEntities = (message) => {
   let entitiesArr = ["datetime", "phone_number"];
   let entityChosen = "";
   let data = {
@@ -154,7 +154,7 @@ let getFacebookUsername = (sender_psid) => {
 }
 function firstEntity(nlp, name) {
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
-}*/
+}
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
@@ -183,7 +183,7 @@ let handleMessage = async (sender_psid, message) => {
   return;
 }
 //handle text message
-/*let entity = handleMessageWithEntities(message);
+let entity = handleMessageWithEntities(message);
 
 if (entity.name === "datetime") {
   //handle quick reply message: asking about the party size , how many people
@@ -202,7 +202,7 @@ if (entity.name === "datetime") {
   await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
 } else {
   //default reply
-};*/
+};
 
 //handle attachment message
 
