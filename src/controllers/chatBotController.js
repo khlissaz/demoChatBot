@@ -152,16 +152,18 @@ let handleMessageWithEntities = (message) => {
   console.log("------------");
   return data;
 }
+
 function firstTrait(nlp, name) {
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
+
 // Handles messages events
 let handleMessage = async (sender_psid, message) => {
   //checking quick reply
   if (message) {
     if (message.app_id == null && user.modele != null) {
       //console.log(user+"/*/*/*");
-      console.log("111111" + user.panne + "1212121");
+      console.log("111111" + user.PAGE_ACCESS_TOKEN + "1212121");
       await chatBotService.sendMessageAskingPanne(sender_psid);
       console.log("2222222" + message.text);
       user.panne = message.text;
