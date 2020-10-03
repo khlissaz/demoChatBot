@@ -13,6 +13,7 @@ let user = {
   panne: "",
   createdAt: ""
 };
+let ok=false;
 
 let postWebhook = (req, res) => {
 
@@ -122,9 +123,10 @@ let handleMessage = async (sender_psid, message) => {
   
   let entity = handleMessageWithEntities(message);
   let username= await getFacebookUsername(sender_psid);
-  console.log(entity+"*******")
+  console.log(entity.nlp+"*******")
   console.log(username+"#####")
-  if (message) {   
+  if (message) {  
+    if(ok) {
     console.log(message.text+"+++++")  
       if (message.text == "Veuillez "+username+" nous informer le modele de votre terminal.") {
         user.modele = message.text;
@@ -150,7 +152,7 @@ let handleMessage = async (sender_psid, message) => {
       // await chatBotService.sendNotificationToTelegram(user);
       await chatBotService.sendMessageDoneAvis;
     };
-  
+  };
 
   //handle text message
 
@@ -221,6 +223,7 @@ let handlePostback = (sender_psid, received_postback) => {
       break;
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);
+      ok=true;
       user.modele = payload;
       console.log("****" + user.modele)
       break;
