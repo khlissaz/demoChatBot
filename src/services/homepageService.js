@@ -1,6 +1,6 @@
 import request from "request";
 require("dotenv").config();
-const PAGE_ACCESS_TOKEN = "EAAFFseMejqcBAMKgqR9CX3nnIuM4vN5a7vmrhg9NT9bxz7a79UiQgQ45hZCcpizIHZBnYVbNQKn6ky6GY1XvqH99wxXkDWzZBAYOZBH6aTalR0Fw3ugp2IzKVM9QdZCORLiZBT9hUXXdnDOU48DacZAht2tz9xCvZCZBZCbceAOauFigZDZD";
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 let setUpMessengerPlatform = ( PAGE_ACCESS_TOKEN) => {
     return new Promise((resolve, reject) => {
         try {
