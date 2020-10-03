@@ -87,9 +87,11 @@ let sendServiceList = (sender_psid) => {
                                     "payload": "DEMANDER_REPARATION",
                                 },
                                 {
-                                    "type": "postback",
-                                    "title": "Acheter un produit",
-                                    "payload": "ACHETER_PRODUIT",
+
+                                    "type":"web_url",
+                                    "url":"https://www.facebook.com/VendoTN/",
+                                    "title":"Acheter un produit"
+
                                 },
                                 {
                                     "type": "postback",
