@@ -13,7 +13,7 @@ let user = {
   panne: "",
   createdAt: ""
 };
-let username =  getFacebookUsername(sender_psid);
+
 let postWebhook = (req, res) => {
 
   // Parse the request body from the POST
@@ -122,6 +122,7 @@ function firstEntity(nlp, name) {
 let handleMessage = async (sender_psid, message) => {
   try { 
   let entity = handleMessageWithEntities(message);
+  let username =  getFacebookUsername(sender_psid);
   console.log(entity)
   if (message) {
 
