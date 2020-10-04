@@ -128,6 +128,7 @@ let handleMessage = async (sender_psid, message) => {
 
   if (ok) {
     console.log(message.text + "+++++")
+    console.log(user.modele + "#####++++++")
     if (message.app_id == null && user.modele == "") {
       user.modele = message.text;
       await chatBotService.sendMessageAskingPanne(sender_psid);
