@@ -104,10 +104,10 @@ let handleMessageWithEntities = (message) => {
   let entitiesArr = ['wit$greetings', `wit$thanks`, `wit$bye`];
    let entityChosen = "";
     let data = {}; // data is an object saving value and name of the entity.
-    console.log(entitiesArr,+"212121212")
-    console.log(data,+"2424242424")
+    //console.log(entitiesArr,+"212121212")
+   // console.log(data,+"2424242424")
     entitiesArr.forEach((name) => {
-      console.log(message.nlp,+"23232323")
+    //  console.log(message.nlp,+"23232323")
         let entity = firstEntity(message.nlp, name);
         if (entity && entity.confidence > 0.8) {
             entityChosen = name;
@@ -136,8 +136,8 @@ let handleMessage = async (sender_psid, message) => {
   console.log(username + "#####")
 
   if (ok) {
-    console.log(message.text + "+++++")
-    console.log(user.modele + "#####++++++")
+   // console.log(message.text + "+++++")
+   // console.log(user.modele + "#####++++++")
     if (message.app_id == null && user.modele == "") {
       user.modele = message.text;
       await chatBotService.sendMessageAskingPanne(sender_psid);
@@ -154,6 +154,7 @@ let handleMessage = async (sender_psid, message) => {
       user.phoneNumber = message.text;
       user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
       //send a notification to Telegram Group chat by Telegram bot.
+      console.log(user+"--------------")
       await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
       ok==false
     
