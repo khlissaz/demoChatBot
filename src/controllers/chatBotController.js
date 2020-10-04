@@ -162,7 +162,7 @@ let handleMessage = async (sender_psid, message) => {
   //handle text message
   let entity = handleMessageWithEntities(message);
   console.log(message.data+ "*******")
-  console.log(message.nlp.traits.object. + "*****+++++")
+  console.log(message.nlp.traits.object+ "*****+++++")
   /* if (entity.name === "phone_number") {
      //handle quick reply message: asking about the party size , how many people
      user.phoneNumber = entity.value;
