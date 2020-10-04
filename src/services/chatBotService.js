@@ -67,7 +67,6 @@ let sendResponseWelcomeNewCustomer = ( sender_psid) => {
 };
 
 
-
 let sendServiceList = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -262,8 +261,6 @@ let sendMessageAskingModele = (sender_psid) => {
         }
     });
 };
-
-
 
 
 let goBackToServiceList = (sender_psid) => {
