@@ -101,7 +101,7 @@ let getFacebookUsername = (sender_psid) => {
   });
 };
 let handleMessageWithEntities = (message) => {
-  let entitiesArr = ["wit$greetings", "wit$thanks", "wit$bye", "phone_number", "location"];
+  let entitiesArr = ["greetings", "thanks", "bye", "phone_number", "location"];
   let entityChosen = "";
   let data = {};
   entitiesArr.forEach((name) => {
@@ -174,15 +174,15 @@ let handleMessage = async (sender_psid, message) => {
   // send messages to the user
   // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
 
-  if (entity.name === "wit$greetings") {
+  if (entity.name === "greetings") {
     //send greetings message
     callSendAPI(sender_psid, "Bonjour , Trust-it a votre service.");
   }
-  if (entity.name === "wit$thanks") {
+  if (entity.name === "thanks") {
     //send thanks message
     callSendAPI(sender_psid, `Merci a Vous!`);
   }
-  if (entity.name === "wit$bye") {
+  if (entity.name === "bye") {
     //send bye message
     callSendAPI(sender_psid, 'bye-bye!');
   }
