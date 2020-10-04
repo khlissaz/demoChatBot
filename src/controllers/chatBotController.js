@@ -168,38 +168,6 @@ let handleMessage = async (sender_psid, message) => {
   };
 
 
-  //handle text message
-  let entity = handleMessageWithEntities(message);
-  console.log(entity.JSON+ "**++++++*****")
-  console.log(message.data+ "*******")
-  console.log(message.nlp.traits.object+ "*****+++++")
-  /* if (entity.name === "phone_number") {
-     //handle quick reply message: asking about the party size , how many people
-     user.phoneNumber = entity.value;
-     // console.log(user.time)
-     await chatBotService.sendMessageAskingLocation(sender_psid);
-   } if (entity.name === "location") {
-     //handle quick reply message: done reserve table
-     user.adresse = entity.value;
-     user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-     //send a notification to Telegram Group chat by Telegram bot.
-   }*/
-  // send messages to the user
-  // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-
-  if (entity.name === "greetings") {
-    //send greetings message
-    callSendAPI(sender_psid, "Bonjour , Trust-it a votre service.");
-  }
-  if (entity.name === "thanks") {
-    //send thanks message
-    callSendAPI(sender_psid, `Merci a Vous!`);
-  }
-  if (entity.name === "bye") {
-    //send bye message
-    callSendAPI(sender_psid, 'bye-bye!');
-  }
-  return;
 };
 
 
