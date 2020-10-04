@@ -104,7 +104,10 @@ let handleMessageWithEntities = (message) => {
   let entitiesArr = ['wit$greetings', `wit$thanks`, `wit$bye`];
    let entityChosen = "";
     let data = {}; // data is an object saving value and name of the entity.
+    console.log(entitiesArr,+"212121212")
+    console.log(data,+"2424242424")
     entitiesArr.forEach((name) => {
+      console.log(message.nlp,+"23232323")
         let entity = firstEntity(message.nlp, name);
         if (entity && entity.confidence > 0.8) {
             entityChosen = name;
