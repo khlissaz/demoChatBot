@@ -232,7 +232,7 @@ let sendServiceListAr = (sender_psid) => {
 let demanderReperation = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
         try {
-             let response = {
+            let response = {
                  "attachment": {
                      "type": "template",
                      "payload": {
@@ -289,7 +289,10 @@ let demanderReperation = (sender_psid) => {
                      }
                  }
              };
-
+  } catch (e) {
+            reject(e);
+        }
+    });
 };
 
 let demanderReperationAr = (sender_psid) => {
