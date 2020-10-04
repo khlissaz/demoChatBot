@@ -138,7 +138,6 @@ let handleMessage = async (sender_psid, message) => {
     } if (message.app_id == null && user.modele !== "" && user.panne == "") {
       user.panne = message.text;
       await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
-      user.phoneNumber = "";
       console.log(entity.nlp+"12145678932")
       return;
     } if (message.app_id == null && user.modele != "" && user.panne != "" && user.phoneNumber == "") {
@@ -148,6 +147,7 @@ let handleMessage = async (sender_psid, message) => {
       user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
       //send a notification to Telegram Group chat by Telegram bot.
       await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+      ok==false
       console.log(user.JSON + "9999999")
       return;
     }
