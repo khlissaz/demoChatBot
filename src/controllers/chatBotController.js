@@ -125,67 +125,67 @@ let handleMessage = async (sender_psid, message) => {
   let username = await getFacebookUsername(sender_psid);
   console.log(entity.nlp + "*******")
   console.log(username + "#####")
-  if (message) {
-    if (ok) {
-      console.log(message.text + "+++++")
-      if (message.app_id == null && user.modele == "") {
-        user.modele = message.text;
-        await chatBotService.sendMessageAskingPanne(sender_psid);
-        user.panne = "";
-        return;
-      } if (message.app_id == null && user.modele !== "" && user.panne == "") {
-        user.panne = message.text;
-        await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
-        user.phoneNumber = "";
-        return;
-      } if (message.app_id == null && user.modele != "" && user.panne != "" && user.phoneNumber == "") {
-        //done a reservation
-        // npm install --save moment to use moment
-        user.phoneNumber = message.text;
-        user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-        //send a notification to Telegram Group chat by Telegram bot.
-        await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-        console.log(user.JSON + "9999999")
-        return;
-      }
-    } else if (message.app_id == null && !ok) {
-      // await chatBotService.sendNotificationToTelegram(user);
-      await chatBotService.sendMessageDoneAvis;
-    };
-    return;
+
+  if (ok) {
+    console.log(message.text + "+++++")
+    if (message.app_id == null && user.modele == "") {
+      user.modele = message.text;
+      await chatBotService.sendMessageAskingPanne(sender_psid);
+      user.panne = "";
+      return;
+    } if (message.app_id == null && user.modele !== "" && user.panne == "") {
+      user.panne = message.text;
+      await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
+      user.phoneNumber = "";
+      return;
+    } if (message.app_id == null && user.modele != "" && user.panne != "" && user.phoneNumber == "") {
+      //done a reservation
+      // npm install --save moment to use moment
+      user.phoneNumber = message.text;
+      user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+      //send a notification to Telegram Group chat by Telegram bot.
+      await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+      console.log(user.JSON + "9999999")
+      return;
+    }
+  } else if (message.app_id == null && !ok) {
+    // await chatBotService.sendNotificationToTelegram(user);
+    await chatBotService.sendMessageDoneAvis;
   };
 
-  //handle text message
 
-  /* if (entity.name === "phone_number") {
-     //handle quick reply message: asking about the party size , how many people
-     user.phoneNumber = entity.value;
-     // console.log(user.time)
-     await chatBotService.sendMessageAskingLocation(sender_psid);
-   } if (entity.name === "location") {
-     //handle quick reply message: done reserve table
-     user.adresse = entity.value;
-     user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-     //send a notification to Telegram Group chat by Telegram bot.
-   }*/
-  // send messages to the user
-  // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
- 
-  if (entity.name === "wit$greetings") {
-    //send greetings message
-    callSendAPI(sender_psid, "Bonjour , Trust-it a votre service.");
-  }
-  if (entity.name === "wit$thanks") {
-    //send thanks message
-    callSendAPI(sender_psid, `Merci a Vous!`);
-  }
-  if (entity.name === "wit$bye") {
-    //send bye message
-    callSendAPI(sender_psid, 'bye-bye!');
-  }
+//handle text message
 
+/* if (entity.name === "phone_number") {
+   //handle quick reply message: asking about the party size , how many people
+   user.phoneNumber = entity.value;
+   // console.log(user.time)
+   await chatBotService.sendMessageAskingLocation(sender_psid);
+ } if (entity.name === "location") {
+   //handle quick reply message: done reserve table
+   user.adresse = entity.value;
+   user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+   //send a notification to Telegram Group chat by Telegram bot.
+ }*/
+// send messages to the user
+// await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
 
+if (entity.name === "wit$greetings") {
+  //send greetings message
+  callSendAPI(sender_psid, "Bonjour , Trust-it a votre service.");
+}
+if (entity.name === "wit$thanks") {
+  //send thanks message
+  callSendAPI(sender_psid, `Merci a Vous!`);
+}
+if (entity.name === "wit$bye") {
+  //send bye message
+  callSendAPI(sender_psid, 'bye-bye!');
+}
+return;
 };
+
+
 
 // Handles messaging_postbacks events
 let handlePostback = (sender_psid, received_postback) => {
