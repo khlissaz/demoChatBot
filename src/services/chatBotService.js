@@ -182,7 +182,7 @@ let response = {"text":"Veuillez "+username+" nous informer le modele de votre t
 });
 }
 
-let sendMessageAskingPhoneNumber = (sender_psid) => {
+let sendMessageAskingPhoneNumber = async (sender_psid) => {
     let request_body = {
         "recipient": {
             "id": sender_psid
