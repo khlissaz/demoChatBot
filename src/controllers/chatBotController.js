@@ -213,7 +213,7 @@ let handlePostback = (sender_psid, received_postback) => {
       chatBotService.sendServiceList(sender_psid).then(function (res) { console.log(res) });
       break;
 
-    case "DEMANDER_REPARATION'":
+    case "DEMANDER_REPARATION":
       chatBotService.demanderReperation(sender_psid);
       break;
 
