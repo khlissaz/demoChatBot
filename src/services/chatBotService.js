@@ -289,6 +289,9 @@ let demanderReperation = (sender_psid) => {
                      }
                  }
              };
+
+await sendMessage(sender_psid, response);
+
   } catch (e) {
             reject(e);
         }
@@ -656,8 +659,6 @@ let sendMessageDoneDeposerReperationAr = async (sender_id) => {
 
 };
 
-
-
 let sendMessageDoneAvis = async (sender_id) => {
     try {
         let response = {
@@ -702,7 +703,6 @@ let sendMessageDoneAvis = async (sender_id) => {
 
 };
 
-
 let sendNotificationToTelegram = (user) => {
     return new Promise((resolve, reject) => {
         try {
@@ -738,8 +738,6 @@ let sendNotificationToTelegram = (user) => {
         }
     });
 };
-
-
 
 
 let achatProduit = (sender_psid) => {
