@@ -139,6 +139,7 @@ let handleMessage = async (sender_psid, message) => {
       user.panne = message.text;
       await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
       user.phoneNumber = "";
+      console.log(entity.nlp+"12145678932")
       return;
     } if (message.app_id == null && user.modele != "" && user.panne != "" && user.phoneNumber == "") {
       //done a reservation
