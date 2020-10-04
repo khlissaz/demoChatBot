@@ -101,7 +101,7 @@ let getFacebookUsername = (sender_psid) => {
   });
 };
 let handleMessageWithEntities = (message) => {
-  let entitiesArr = ["greetings", "thanks", "bye", "phone_number"];
+  let entitiesArr = ['wit$greetings', `wit$thanks`, `wit$bye`];
    let entityChosen = "";
     let data = {}; // data is an object saving value and name of the entity.
     entitiesArr.forEach((name) => {
