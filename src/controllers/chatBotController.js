@@ -181,10 +181,6 @@ let handleMessage = async (sender_psid, message) => {
 };
 
 
-
-
-
-
 // Handles messaging_postbacks events
 let handlePostback = (sender_psid, received_postback) => {
   // let response;
@@ -215,24 +211,32 @@ let handlePostback = (sender_psid, received_postback) => {
     case "Demander_service":
       //send service list to users
       chatBotService.sendServiceList(sender_psid).then(function (res) { console.log(res) });
-
       break;
+
     case "DEMANDER_REPARATION":
       chatBotService.demanderReperation(sender_psid);
-      user.type_appareil = payload;
       break;
-      case "SMARTPHONE":
-        case "ORDINATEUR":
-        case "IMPRIMANTE":
-        case "CONSOLE":
-          chatBotService.handleDeposRep(sender_psid);
-          ok = true;
-          user.type_appareil = payload;
-          //let  modele=chatBotService.handleDeposRep(sender_psid).body;
-          // console.log(modele+"00000000000")
-          // console.log("****" + user.modele)
-          break;
-    
+
+    /*  case "ACHETER_PRODUIT":
+        chatBotService.achatProduit(sender_psid);
+        break;
+  */
+    case "AVIS_RECLAMATION":
+      ok = false;
+      chatBotService.avisClient(sender_psid);
+      break;
+    case "SMARTPHONE":
+    case "ORDINATEUR":
+    case "IMPRIMANTE":
+    case "CONSOLE":
+      chatBotService.handleDeposRep(sender_psid);
+      ok = true;
+      user.type_appareil = payload;
+      //let  modele=chatBotService.handleDeposRep(sender_psid).body;
+      // console.log(modele+"00000000000")
+      // console.log("****" + user.modele)
+      break;
+
     default:
       console.log("Somthing wrong with switch case payload");
   }
