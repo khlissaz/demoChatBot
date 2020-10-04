@@ -103,28 +103,27 @@ let getFacebookUsername = (sender_psid) => {
 let handleMessageWithEntities = (message) => {
   let entitiesArr = ["greetings", "thanks", "bye", "phone_number", "location"];
   let entityChosen = "";
-  let data = {};
+  let data = {}; // data is an object saving value and name of the entity.
   entitiesArr.forEach((name) => {
-    let entity = firstTrait(message.nlp, name);
-    if (entity && entity.confidence > 0.8) {
-
-      entityChosen = name;
-      data.value = entity.value;
-
-    }
+      let entity = firstEntity(message.nlp, name);
+      if (entity && entity.confidence > 0.8) {
+          entityChosen = name;
+          data.value = entity.value;
+      }
   });
+
   data.name = entityChosen;
   return data;
-}
-function firstTrait(nlp, name) {
-  return nlp && nlp.entities && nlp.traits[name] && nlp.traits[name][0];
+};
+
+function firstEntity(nlp, name) {
+  return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
 //handle text message
 let handleMessage = async (sender_psid, message) => {
 
-  let entity = handleMessageWithEntities(message);
   let username = await getFacebookUsername(sender_psid);
-  console.log(entity.nlp + "*******")
+ 
   console.log(username + "#####")
 
   if (ok) {
@@ -148,6 +147,7 @@ let handleMessage = async (sender_psid, message) => {
       //send a notification to Telegram Group chat by Telegram bot.
       await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
       ok==false
+    
       console.log(user.JSON + "9999999")
       
     }
@@ -159,7 +159,8 @@ let handleMessage = async (sender_psid, message) => {
 
 
   //handle text message
-
+  let entity = handleMessageWithEntities(message);
+  console.log(entity.nlp + "*******")
   /* if (entity.name === "phone_number") {
      //handle quick reply message: asking about the party size , how many people
      user.phoneNumber = entity.value;
