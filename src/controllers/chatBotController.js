@@ -100,75 +100,88 @@ let getFacebookUsername = (sender_psid) => {
     });
   });
 };
+
 let handleMessageWithEntities = (message) => {
-  let entitiesArr = ['wit$greetings', `wit$thanks`, `wit$bye`];
-   let entityChosen = "";
-    let data = {}; // data is an object saving value and name of the entity.
-    //console.log(entitiesArr,+"212121212")
-   // console.log(data,+"2424242424")
-    entitiesArr.forEach((name) => {
-    //  console.log(message.nlp,+"23232323")
-        let entity = firstEntity(message.nlp, name);
-        if (entity && entity.confidence > 0.8) {
-            entityChosen = name;
-            data.value = entity.value;
-        }
-    });
-    console.log("----------------");
-    console.log(entityChosen);
-    console.log("----------------");
+  let entitiesArr = ["wit$greetings", "wit$thanks", "wit$bye", "phone_number", "location"];
+  let entityChosen = "";
+  let data = {};
+  entitiesArr.forEach((name) => {
+    let entity = firstEntity(message.nlp, name);
+    if (entity && entity.confidence > 0.8) {
 
-    data.name = entityChosen;
-    return data;
-};
+      entityChosen = name;
+      data.value = entity.value;
 
+    }
+  });
+  data.name = entityChosen;
+  return data;
+}
 function firstEntity(nlp, name) {
-  console.log(nlp+"000000")
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
 
-
 //handle text message
 let handleMessage = async (sender_psid, message) => {
-
-  let username = await getFacebookUsername(sender_psid);
- 
-  console.log(username + "#####")
-
-  if (ok) {
-   // console.log(message.text + "+++++")
-   // console.log(user.modele + "#####++++++")
-    if (message.app_id == null && user.modele == "") {
-      user.modele = message.text;
-      await chatBotService.sendMessageAskingPanne(sender_psid);
-      user.panne = "";
-      return;
-    } if (message.app_id == null && user.modele !== "" && user.panne == "") {
-      user.panne = message.text;
-      await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
-      console.log(entity.nlp+"12145678932")
-      return;
-    } if (message.app_id == null && user.modele != "" && user.panne != "" && user.phoneNumber == "") {
-      //done a reservation
-      // npm install --save moment to use moment
-      user.phoneNumber = message.text;
-      user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
-      //send a notification to Telegram Group chat by Telegram bot.
-      console.log(user.JSON+"--------------")
-      await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-      ok==false
-    
-      console.log(user.JSON + "9999999")
-      
-    }
-    
-  } else if (message.app_id == null && !ok) {
-    // await chatBotService.sendNotificationToTelegram(user);
-    await chatBotService.sendMessageDoneAvis;
+  if (message) {
+    if (ok) {
+      if (message.app_id == null && user.modele == "") {
+        user.modele = message.text;
+        await chatBotService.sendMessageAskingPanne(sender_psid);
+        user.panne = "";
+        return;
+      } if (message.app_id == null && user.modele !== "" && user.panne == "") {
+        user.panne = message.text;
+        await chatBotService.sendMessageAskingPhoneNumber(sender_psid);
+        user.phoneNumber = "";
+        return;
+      } if (message.app_id == null && user.modele != "" && user.panne != "" && user.phoneNumber == "") {
+        //done a reservation
+        // npm install --save moment to use moment
+        user.phoneNumber = message.text;
+        user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+        //send a notification to Telegram Group chat by Telegram bot.
+        await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+        console.log(user.JSON + "9999999")
+        return;
+      }
+    } else if (message.app_id == null && !ok) {
+      // await chatBotService.sendNotificationToTelegram(user);
+      await chatBotService.sendMessageDoneAvis;
+    };
   };
 
-
+  //handle text message
+  let entity = handleMessageWithEntities(message);
+  if (entity.name === "phone_number") {
+    //handle quick reply message: asking about the party size , how many people
+    user.phoneNumber = entity.value;
+    // console.log(user.time)
+    await chatBotService.sendMessageAskingLocation(sender_psid);
+  } if (entity.name === "location") {
+    //handle quick reply message: done reserve table
+    user.adresse = entity.value;
+    user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
+    //send a notification to Telegram Group chat by Telegram bot.
+  }
+  // send messages to the user
+  // await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
+  if (entity.name === "wit$greetings") {
+    //send greetings message
+    callSendAPI(sender_psid, "Bonjour , Trust-it a votre service.");
+  }
+  if (entity.name === "wit$thanks") {
+    //send thanks message
+    callSendAPI(sender_psid, `Merci a Vous!`);
+  }
+  if (entity.name === "wit$bye") {
+    //send bye message
+    callSendAPI(sender_psid, 'bye-bye!');
+  }
 };
+
+
+
 
 
 
@@ -192,8 +205,8 @@ let handlePostback = (sender_psid, received_postback) => {
   switch (payload) {
     case "GET_STARTED":
       //get facebook username
-    //  let username =  getFacebookUsername(sender_psid);
-     // user.name = username;
+      let username = getFacebookUsername(sender_psid);
+      user.name = username;
       //console.log(username)
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(sender_psid);
@@ -208,19 +221,18 @@ let handlePostback = (sender_psid, received_postback) => {
       chatBotService.demanderReperation(sender_psid);
       user.type_appareil = payload;
       break;
-    case "SMARTPHONE":
-      chatBotService.handleDeposRep(sender_psid);
-      ok = true;
-      console.log("****" + user.modele)
-      break;
-    case "yes":
-      response = { text: "Thank you!" };
-      callSendAPI(sender_psid, response);
-      break;
-    case "no":
-      response = { text: "Please try another image." };
-      callSendAPI(sender_psid, response);
-      break;
+      case "SMARTPHONE":
+        case "ORDINATEUR":
+        case "IMPRIMANTE":
+        case "CONSOLE":
+          chatBotService.handleDeposRep(sender_psid);
+          ok = true;
+          user.type_appareil = payload;
+          //let  modele=chatBotService.handleDeposRep(sender_psid).body;
+          // console.log(modele+"00000000000")
+          // console.log("****" + user.modele)
+          break;
+    
     default:
       console.log("Somthing wrong with switch case payload");
   }
@@ -229,8 +241,6 @@ let handlePostback = (sender_psid, received_postback) => {
   // Send the message to acknowledge the postback
   //callSendAPI(sender_psid, response);
 };
-
-
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
