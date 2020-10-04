@@ -161,7 +161,7 @@ let handleMessage = async (sender_psid, message) => {
 
   //handle text message
   let entity = handleMessageWithEntities(message);
-  console.log(entity.name+ "**++++++*****")
+  console.log(entity.data+ "**++++++*****")
   console.log(message.data+ "*******")
   console.log(message.nlp.traits.object+ "*****+++++")
   /* if (entity.name === "phone_number") {
