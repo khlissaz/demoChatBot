@@ -120,6 +120,7 @@ let handleMessageWithEntities = (message) => {
 };
 
 function firstEntity(nlp, name) {
+  console.log(nlp+"000000")
   return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
 
