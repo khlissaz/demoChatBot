@@ -220,8 +220,7 @@ let sendServiceListAr = (sender_psid) => {
 
             //send a welcome message
             await sendMessage(sender_psid, response);
-            console.log("/////" + resolve);
-            // resolve("done!")
+           
         } catch (error) {
             console.log("/////" + error);
             reject(error);
@@ -237,7 +236,8 @@ let demanderReperation = (sender_psid) => {
                      "type": "template",
                      "payload": {
                          "template_type": "generic",
-                         "elements": [{
+                         "elements": [
+                             {
                              "title": "Service aux utilisateurs de Smartphones, Laptops et Consoles de jeux pour des réparations de confiance grâce à un réseau de réparateurs compétents sur tout le territoire Tunisien",
                              // "subtitle": "Votre service est notre objectif",
                              "image_url": "https://statics.trustit.tn/categories/1589644098457.png",
@@ -290,9 +290,10 @@ let demanderReperation = (sender_psid) => {
                  }
              };
 
-await sendMessage(sender_psid, response);
+             await sendMessage(sender_psid, response);
 
-  } catch (e) {
+  }
+   catch (e) {
             reject(e);
         }
     });
