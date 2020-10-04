@@ -104,7 +104,7 @@ let handleMessageWithEntities = (message) => {
   let entityChosen = "";
   let data = {};
   entitiesArr.forEach((name) => {
-    let entity = firstEntity(message.nlp, name);
+    let entity = firstTrait(message.nlp, name);
     if (entity && entity.confidence > 0.8) {
 
       entityChosen = name;
@@ -115,8 +115,8 @@ let handleMessageWithEntities = (message) => {
   data.name = entityChosen;
   return data;
 }
-function firstEntity(nlp, name) {
-  return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+function firstTrait(nlp, name) {
+  return nlp && nlp.entities && nlp.traits[name] && nlp.traits[name][0];
 }
 //handle text message
 let handleMessage = async (sender_psid, message) => {
