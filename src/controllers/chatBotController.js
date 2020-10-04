@@ -154,7 +154,7 @@ let handleMessage = async (sender_psid, message) => {
       user.phoneNumber = message.text;
       user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
       //send a notification to Telegram Group chat by Telegram bot.
-      console.log(user+"--------------")
+      console.log(user.JSON+"--------------")
       await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
       ok==false
     
