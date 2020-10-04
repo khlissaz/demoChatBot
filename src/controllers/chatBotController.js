@@ -147,11 +147,11 @@ let handleMessage = async (sender_psid, message) => {
       user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
       //send a notification to Telegram Group chat by Telegram bot.
       await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-      
+      ok==false
       console.log(user.JSON + "9999999")
-      return;
+      
     }
-    ok==false
+    
   } else if (message.app_id == null && !ok) {
     // await chatBotService.sendNotificationToTelegram(user);
     await chatBotService.sendMessageDoneAvis;
