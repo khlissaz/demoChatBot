@@ -102,22 +102,22 @@ let getFacebookUsername = (sender_psid) => {
 };
 let handleMessageWithEntities = (message) => {
   let entitiesArr = ["greetings", "thanks", "bye", "phone_number", "location"];
-  let entityChosen = "";
-  let data = {}; // data is an object saving value and name of the entity.
-  entitiesArr.forEach((name) => {
-      let entity = firstEntity(message.nlp, name);
-      if (entity && entity.confidence > 0.8) {
-          entityChosen = name;
-          data.value = entity.value;
-      }
-  });
+   let entityChosen = "";
+    let data = {}; // data is an object saving value and name of the entity.
+    entitiesArr.forEach((name) => {
+        let entity = firstEntity(message.nlp, name);
+        if (entity && entity.confidence > 0.8) {
+            entityChosen = name;
+            data.value = entity.value;
+        }
+    });
 
-  data.name = entityChosen;
-  return data;
+    data.name = entityChosen;
+    return data;
 };
 
 function firstEntity(nlp, name) {
-  return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
 }
 //handle text message
 let handleMessage = async (sender_psid, message) => {
