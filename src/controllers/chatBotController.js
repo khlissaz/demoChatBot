@@ -227,7 +227,6 @@ let handlePostback = (sender_psid, received_postback) => {
     case "SMARTPHONE":
       chatBotService.handleDeposRep(sender_psid);
       ok = true;
-      user.modele = payload;
       console.log("****" + user.modele)
       break;
     case "yes":
