@@ -740,51 +740,6 @@ let sendNotificationToTelegram = (user) => {
     });
 };
 
-
-let achatProduit = (sender_psid) => {
-    return new Promise(async (resolve, reject) => {
-
-        try {
-            // let response_first = { "text": "سلام " + username + "، كيفاه نجمو نعاونوك؟ /g Comment pouvons-nous vous aider exactement ? " };
-            //let username = await getFacebookUsername(sender_psid);
-            let response_second = {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "Bonjour, pour l'achat et la vente verfiez avec Vendo https://www.facebook.com/VendoTN/ ",
-                            //"url": "https://www.facebook.com/VendoTN/",
-                            "image_url": "https://statics.trustit.tn/categories/1598692858621.jpg",
-                            "buttons": [
-                                {
-                                    "type": "web_url",
-                                    "title": "Demandez service",
-                                    "payload": "Demander_service",
-                                },
-
-                            ],
-                        }]
-                    }
-                }
-            };
-
-            //send a welcome message
-            // await sendMessage(sender_psid, response_first);
-
-            //send a image with button view main menu
-            await sendMessage(sender_psid, response_second);
-            console.log("/////" + resolve);
-            resolve("done!")
-        } catch (e) {
-            console.log("/////" + e);
-            reject(e);
-        }
-
-
-    });
-
-};
 let avisClient = (sender_psid) => {
     return new Promise(async (resolve, reject) => {
 
@@ -827,35 +782,7 @@ let avisClient = (sender_psid) => {
      });
      */
 };
-let sendLookupUser = (sender_psid) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let response = templateMessage.sendLookupUserTemplate();
-            await sendMessage(sender_psid, response)
-            resolve("done")
-        }
-        catch (e) {
-            reject(e)
 
-        }
-    })
-}
-
-
-let sendInfoUserWebView = (sender_psid) => {
-    return new Promise(async(resolve, reject) => {
-        try {
-            let respose=templateMessage.
-            resolve("done")
-
-        } catch(error) {
-            reject(error);
-
-        }
-
-    });
-
-}
 module.exports = {
     getFacebookUsername: getFacebookUsername,
     sendResponseWelcomeNewCustomer: sendResponseWelcomeNewCustomer,
@@ -876,9 +803,7 @@ module.exports = {
     sendNotificationToTelegram: sendNotificationToTelegram,
     sendMessageDoneDeposerReperation: sendMessageDoneDeposerReperation,
     sendMessageDoneDeposerReperationAr: sendMessageDoneDeposerReperationAr,
-    achatProduit: achatProduit,
     avisClient: avisClient,
     sendMessageDoneAvis: sendMessageDoneAvis,
-    sendLookupUser: sendLookupUser,
-    sendInfoUserWebView: sendInfoUserWebView
+  
 }

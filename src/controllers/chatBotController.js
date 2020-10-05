@@ -142,11 +142,11 @@ let handleMessage = async (sender_psid, message) => {
         user.createdAt = moment(Date.now()).zone("+07:00").format('MM/DD/YYYY h:mm A');
         //send a notification to Telegram Group chat by Telegram bot.
         await chatBotService.sendMessageDoneDeposerReperation(sender_psid);
-        console.log(user.JSON + "9999999")
+       
         return;
       }
     } else if (message.app_id == null && !ok) {
-      // await chatBotService.sendNotificationToTelegram(user);
+      
       await chatBotService.sendMessageDoneAvis;
     };
   };
@@ -156,7 +156,7 @@ let handleMessage = async (sender_psid, message) => {
   if (entity.name === "phone_number") {
     //handle quick reply message: asking about the party size , how many people
     user.phoneNumber = entity.value;
-    // console.log(user.time)
+   
     await chatBotService.sendMessageAskingLocation(sender_psid);
   } if (entity.name === "location") {
     //handle quick reply message: done reserve table
@@ -203,7 +203,6 @@ let handlePostback = (sender_psid, received_postback) => {
       //get facebook username
       let username = getFacebookUsername(sender_psid);
       user.name = username;
-      //console.log(username)
       //send welcome response to users
       chatBotService.sendResponseWelcomeNewCustomer(sender_psid);
 
@@ -217,10 +216,6 @@ let handlePostback = (sender_psid, received_postback) => {
       chatBotService.demanderReperation(sender_psid);
       break;
 
-    /*  case "ACHETER_PRODUIT":
-        chatBotService.achatProduit(sender_psid);
-        break;
-  */
     case "AVIS_RECLAMATION":
       ok = false;
       chatBotService.avisClient(sender_psid);
@@ -232,11 +227,7 @@ let handlePostback = (sender_psid, received_postback) => {
       chatBotService.handleDeposRep(sender_psid);
       ok = true;
       user.type_appareil = payload;
-      //let  modele=chatBotService.handleDeposRep(sender_psid).body;
-      // console.log(modele+"00000000000")
-      // console.log("****" + user.modele)
       break;
-
     default:
       console.log("Somthing wrong with switch case payload");
   }
@@ -264,7 +255,7 @@ function callSendAPI(sender_psid, response) {
     "json": request_body
   }, (err, res, body) => {
     if (!err) {
-      console.log('***message sent!')
+      console.log('message sent!')
     } else {
       console.error("Unable to send message:" + err);
     }
